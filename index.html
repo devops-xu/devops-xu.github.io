@@ -152,6 +152,125 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-记一次nexus事故" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/">记一次nexus事故</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/" class="archive-article-date">
+  	<time datetime="2020-07-07T07:16:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一、故障描述</p>
+<p>nexus服务器最初配置为4C8G，随着业务量的暴增，终于在某一天不堪重负，OOM了，排查后，增加内存到16G，再次启动，然后看似正常，然后却发生了诡异的事件。。。。。。</p>
+<p>二、排查过程</p>
+<p>问题一，</p>
+<p>查看日志，发现日志报错如下<br>学习笔记之——nexus（四）记一次nexus故障</p>
+<p><img src="/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/nexus1.jpg" alt></p>
+<p>经确认，assetdownloadcount记录的是asset下载次数的数据，报错是因为记录delete失败，该表数据并不重要，故采用人工删除的方式解决，筛选日志，发现需要删除的表为truncate cluster assetdownloadcount_3，truncate cluster assetdownloadcount_5，truncate cluster assetdownloadcount_10，truncate cluster assetdownloadcount_15</p>
+<p>处理方案：</p>
+<p>1、进入/opt/nexus/目录下，执行命令：java -jar ./lib/support/nexus-orient-console.jar 进入orientdb命令行</p>
+<p>2、执行命令：CONNECT PLOCAL:/opt/sonatype-work/nexus3/db/component admin admin 连接到component库</p>
+<p>3、执行命令：</p>
+<p>truncate cluster assetdownloadcount_3</p>
+<p>truncate cluster assetdownloadcount_5</p>
+<p>truncate cluster assetdownloadcount_10</p>
+<p>truncate cluster assetdownloadcount_15</p>
+<p>删除有问题的cluster</p>
+<p>4、执行命令：</p>
+<p>REBUILD INDEX *</p>
+<p>REPAIR DATABASE –fix-graph</p>
+<p>REPAIR DATABASE –fix-links</p>
+<p>REPAIR DATABASE –fix-ridbags</p>
+<p>REPAIR DATABASE –fix-bonsai</p>
+<p>进行数据库修复</p>
+<p>至此问题一解除</p>
+<p>问题二，</p>
+<p>本想着都连上了orientdb命令行了，就去其他几个库修复一下吧，命令都是一样的，没想到到了config库报错了<br>学习笔记之——nexus（四）记一次nexus故障</p>
+<p><img src="/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/nexus2.jpg" alt><br>学习笔记之——nexus（四）记一次nexus故障</p>
+<p><img src="/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/nexus3.jpg" alt></p>
+<p>几经百度终于查到可以通过删除index来解决，执行命令：drop INDEX quartz_job_detail_name_group_idx</p>
+<p>删除完毕后重新执行修复命令，不在报错</p>
+<p>重启nexus完美启动，问题解决</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nexus</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">devops</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/devops工具//" class="article-tag-list-link color4">devops工具</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SonatypeNexus用户配置那点事儿" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

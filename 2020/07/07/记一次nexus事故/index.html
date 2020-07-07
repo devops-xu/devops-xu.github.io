@@ -6,15 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020 | Devops技术小站</title>
+  <title>记一次nexus事故 | Devops技术小站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Devops技术小站">
-<meta property="og:url" content="http://yoursite.com/archives/2020/index.html">
+  <meta name="description" content="一、故障描述 nexus服务器最初配置为4C8G，随着业务量的暴增，终于在某一天不堪重负，OOM了，排查后，增加内存到16G，再次启动，然后看似正常，然后却发生了诡异的事件。。。。。。 二、排查过程 问题一， 查看日志，发现日志报错如下学习笔记之——nexus（四）记一次nexus故障  经确认，assetdownloadcount记录的是asset下载次数的数据，报错是因为记录delete失败，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次nexus事故">
+<meta property="og:url" content="http://yoursite.com/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/index.html">
 <meta property="og:site_name" content="Devops技术小站">
+<meta property="og:description" content="一、故障描述 nexus服务器最初配置为4C8G，随着业务量的暴增，终于在某一天不堪重负，OOM了，排查后，增加内存到16G，再次启动，然后看似正常，然后却发生了诡异的事件。。。。。。 二、排查过程 问题一， 查看日志，发现日志报错如下学习笔记之——nexus（四）记一次nexus故障  经确认，assetdownloadcount记录的是asset下载次数的数据，报错是因为记录delete失败，">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/nexus1.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/nexus2.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/nexus3.jpg">
+<meta property="article:published_time" content="2020-07-07T07:16:43.000Z">
+<meta property="article:modified_time" content="2020-07-07T07:16:43.274Z">
 <meta property="article:author" content="Devops旭">
+<meta property="article:tag" content="nexus">
+<meta property="article:tag" content="devops">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/nexus1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Devops技术小站" type="application/atom+xml">
   
@@ -150,36 +160,86 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-记一次nexus事故" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      记一次nexus事故
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/" class="archive-article-date">
+
+        
+        <a href="/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/" class="archive-article-date">
   	<time datetime="2020-07-07T07:16:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-07</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/">记一次nexus事故</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一、故障描述</p>
+<p>nexus服务器最初配置为4C8G，随着业务量的暴增，终于在某一天不堪重负，OOM了，排查后，增加内存到16G，再次启动，然后看似正常，然后却发生了诡异的事件。。。。。。</p>
+<p>二、排查过程</p>
+<p>问题一，</p>
+<p>查看日志，发现日志报错如下<br>学习笔记之——nexus（四）记一次nexus故障</p>
+<p><img src="/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/nexus1.jpg" alt></p>
+<p>经确认，assetdownloadcount记录的是asset下载次数的数据，报错是因为记录delete失败，该表数据并不重要，故采用人工删除的方式解决，筛选日志，发现需要删除的表为truncate cluster assetdownloadcount_3，truncate cluster assetdownloadcount_5，truncate cluster assetdownloadcount_10，truncate cluster assetdownloadcount_15</p>
+<p>处理方案：</p>
+<p>1、进入/opt/nexus/目录下，执行命令：java -jar ./lib/support/nexus-orient-console.jar 进入orientdb命令行</p>
+<p>2、执行命令：CONNECT PLOCAL:/opt/sonatype-work/nexus3/db/component admin admin 连接到component库</p>
+<p>3、执行命令：</p>
+<p>truncate cluster assetdownloadcount_3</p>
+<p>truncate cluster assetdownloadcount_5</p>
+<p>truncate cluster assetdownloadcount_10</p>
+<p>truncate cluster assetdownloadcount_15</p>
+<p>删除有问题的cluster</p>
+<p>4、执行命令：</p>
+<p>REBUILD INDEX *</p>
+<p>REPAIR DATABASE –fix-graph</p>
+<p>REPAIR DATABASE –fix-links</p>
+<p>REPAIR DATABASE –fix-ridbags</p>
+<p>REPAIR DATABASE –fix-bonsai</p>
+<p>进行数据库修复</p>
+<p>至此问题一解除</p>
+<p>问题二，</p>
+<p>本想着都连上了orientdb命令行了，就去其他几个库修复一下吧，命令都是一样的，没想到到了config库报错了<br>学习笔记之——nexus（四）记一次nexus故障</p>
+<p><img src="/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/nexus2.jpg" alt><br>学习笔记之——nexus（四）记一次nexus故障</p>
+<p><img src="/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/nexus3.jpg" alt></p>
+<p>几经百度终于查到可以通过删除index来解决，执行命令：drop INDEX quartz_job_detail_name_group_idx</p>
+<p>删除完毕后重新执行修复命令，不在报错</p>
+<p>重启nexus完美启动，问题解决</p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -195,7 +255,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -208,123 +268,104 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/07/SonatypeNexus%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF/" class="archive-article-date">
-  	<time datetime="2020-07-07T06:35:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-07</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/07/07/SonatypeNexus%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SonatypeNexus用户配置那点事儿</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/07/SonatypeNexus%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF/">SonatypeNexus用户配置那点事儿</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nexus</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">devops</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/devops工具//" class="article-tag-list-link color4">devops工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/06/nexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/" class="archive-article-date">
-  	<time datetime="2020-07-06T10:26:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/06/nexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/">nexus你需要知道的那些事儿</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nexus</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">devops</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/devops工具//" class="article-tag-list-link color4">devops工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -347,8 +388,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
