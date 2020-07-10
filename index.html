@@ -146,6 +146,98 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-记一次tar命令引发的事故" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/10/%E8%AE%B0%E4%B8%80%E6%AC%A1tar%E5%91%BD%E4%BB%A4%E5%BC%95%E5%8F%91%E7%9A%84%E4%BA%8B%E6%95%85/">记一次tar命令引发的事故</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/10/%E8%AE%B0%E4%B8%80%E6%AC%A1tar%E5%91%BD%E4%BB%A4%E5%BC%95%E5%8F%91%E7%9A%84%E4%BA%8B%E6%95%85/" class="archive-article-date">
+  	<time datetime="2020-07-10T02:34:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>背景：<br>1、公司的cicd流水线会根据环境封装多个产出包，包内容仅配置文件存在差异，其余文件均相同<br>2、替换配置文件的脚本由项目组自行维护，项目组选择了使用tar -u的方式替换同名配置文件</p>
+<p>问题复现：<br>1、在一台崭新的机器上clone项目，并执行构建<br>2、执行配置文件替换脚本replaceconfig.sh<br>3、观察控制台输出日志，发现从第二个环境起，未输出配置文件替换信息，拆开部署包发现，配置文件均为uat环境的配置</p>
+<p>问题排查<br>1、查看tar -u 的说明<br> -u, –update               only append files newer than copy in archive<br> 更新文件，看起来没什么区别，无奈，求助百度吧<br> 参考文档：<a href="https://blog.csdn.net/ciweigege/article/details/51784457" target="_blank" rel="noopener">https://blog.csdn.net/ciweigege/article/details/51784457</a><br>2、验证，在replaceconfig.sh中加入touch 更新新配制的mtime属性，并加入sleep 1 以确保mtime不一致，再执行replaceconfig.sh后，替换成功</p>
+<p>解决方案：<br>方案一，使用tar -r 强制更新不验证mtime<br>方案二，通过touch 和sleep 刷新mtime</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">事故</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/生产问题//" class="article-tag-list-link color5">生产问题</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/10/%E8%AE%B0%E4%B8%80%E6%AC%A1tar%E5%91%BD%E4%BB%A4%E5%BC%95%E5%8F%91%E7%9A%84%E4%BA%8B%E6%95%85/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-记一次nexus事故" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -634,6 +726,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">devops</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">事故</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
             
             <div class="clearfix"></div>
