@@ -6,14 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: nexus | Devops技术小站</title>
+  <title>dockerfile的那些事儿 | Devops技术小站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Devops技术小站">
-<meta property="og:url" content="http://yoursite.com/tags/nexus/index.html">
+  <meta name="description" content="docker容器的制作方式主要为两种，第一种为从容器构建镜像，即容器镜像，通过docker commit 的方式进行构建，该方法本菜鸟并不推荐，原因有如下几点：1）镜像为分层结构，容器则为镜像顶层加了一个可写层，这一方式构建的镜像极容易镜像过大。2）容器镜像无法确定这一层可写层内的内容，对于安全性上，存在问题，而且也不易维护。 　　第二种镜像构建的方法则为dockerfile，通过docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dockerfile的那些事儿">
+<meta property="og:url" content="http://yoursite.com/2020/07/10/dockerfile%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/index.html">
 <meta property="og:site_name" content="Devops技术小站">
+<meta property="og:description" content="docker容器的制作方式主要为两种，第一种为从容器构建镜像，即容器镜像，通过docker commit 的方式进行构建，该方法本菜鸟并不推荐，原因有如下几点：1）镜像为分层结构，容器则为镜像顶层加了一个可写层，这一方式构建的镜像极容易镜像过大。2）容器镜像无法确定这一层可写层内的内容，对于安全性上，存在问题，而且也不易维护。 　　第二种镜像构建的方法则为dockerfile，通过docker">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-10T14:32:30.000Z">
+<meta property="article:modified_time" content="2020-07-10T14:32:30.737Z">
 <meta property="article:author" content="Devops旭">
+<meta property="article:tag" content="devops">
+<meta property="article:tag" content="容器">
+<meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Devops技术小站" type="application/atom+xml">
@@ -144,52 +151,122 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-dockerfile的那些事儿" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      dockerfile的那些事儿
+    </h1>
+  
+
+        
+        <a href="/2020/07/10/dockerfile%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/" class="archive-article-date">
+  	<time datetime="2020-07-10T14:32:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-10</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>　　docker容器的制作方式主要为两种，第一种为从容器构建镜像，即容器镜像，通过docker commit 的方式进行构建，该方法本菜鸟并不推荐，原因有如下几点：1）镜像为分层结构，容器则为镜像顶层加了一个可写层，这一方式构建的镜像极容易镜像过大。2）容器镜像无法确定这一层可写层内的内容，对于安全性上，存在问题，而且也不易维护。</p>
+<p>　　第二种镜像构建的方法则为dockerfile，通过dockerfile来控制镜像的构建。这个也是官方推荐的方案，同时毕业也推崇此方案。</p>
+<p>　　dockerfile为一个纯文本文件，通过指令来控制构建，常用指令如下：</p>
+<p>　　1.FROM 此指令后面跟随的为基础镜像。例如:FROM centos:7 引用基础镜像centos:7</p>
+<p>　　2.MAINTAINER 此指令用于维护构建者信息。例如:MAINTAINER XuPangzi <a href="mailto:&#x50;&#x61;&#110;&#x67;&#122;&#x69;&#64;&#x65;&#120;&#97;&#x6d;&#x70;&#108;&#x65;&#x2e;&#99;&#111;&#x6d;">&#x50;&#x61;&#110;&#x67;&#122;&#x69;&#64;&#x65;&#120;&#97;&#x6d;&#x70;&#108;&#x65;&#x2e;&#99;&#111;&#x6d;</a></p>
+<p>　　3.LABEL 用于添加标签。例如:LABEL BASE FOR SPRING-CLOUD</p>
+<p>　　4.COPY 用于拷贝文件，不解压。例如:COPY tomcat.tar  /opt/</p>
+<p>　　5.ADD 用户拷贝文件，可解压。例如:ADD tomcat.tar /opt/</p>
+<p>　　6.RUN 用于执行shell命令。例如:RUN  mkdir -p /app/{log,data,conf,lib}</p>
+<p>　　7.WORKDIR 用于设置工作目录，即进入容器后的默认目录。例如:WORKDIR /app</p>
+<p>　　8.USER 为运行shell命令的用户。例如:USER app</p>
+<p>　　　　　　　　　　　　　　　　　　　USER app:app</p>
+<p>　　　　　　　　　　　　　　　　　　　USER 500</p>
+<p>　　　　　　　　　　　　　　　　　　　USER 500:500</p>
+<p>　　　　　　　　　　　　　　　　　　　USER app:500</p>
+<p>　　　　　　　　　　　　　　　　　　　USER 500:app</p>
+<p>　　9.EXPOSE 声明端口。例如:EXPOSE 8881</p>
+<p>　　10.ENV 环境变量。例如:ENV MYSQL_PORT 8306</p>
+<p>　　11.ENTRYPOINT 容器启动时执行的命令，不会被docker run 覆盖。例如:ENTRYPOINT [“/bin/bash”,”-C”,”/opt/apache-tomcat/start.sh”]  exec 风格  ENTRYPOINT /bin/bash  -C /opt/apache-tomcat/start.sh shell风格</p>
+<p>　　12.CMD 容器启动时执行的shell命令</p>
+<p>　　谈完dockerfile，该谈一下构建镜像了。通常都是采用 docker build -t example:v1 . 在dockerfile所在目录执行即可，同时ADD和COPY的文件也需要在dockerfile同级，不过为了匹配流水线作业，通常会采用另外一种方式进行构建:</p>
+<p>　　1.用户自备dockerfile 同时dockerfile以应用来命名，例如APP1_dockerfile，在构建镜像时，执行命令 docker build –no-cache=true -t app_A:v1 -f APP1_dockerfile .</p>
+<p>　　2.将dockerfile植入到构建脚本中，通过构建是引入的参数来生成dockerfile 同时构建镜像，此方式下仍建议采用命令docker build –no-cache=true -t app_A:v1 -f APP1_dockerfile .</p>
+<p>　　</p>
+<p>　　实践：</p>
+<p>　　1.镜像最好是自己构建，从dockerhub或其他平台pull的私人镜像，无法保证是否里面埋有不安全插件，为了保障安全，推荐自己构建镜像</p>
+<p>　　2.选择恰当的基础镜像，核心应用，选择较大且稳定的镜像，比如centos，ubuntu，但该镜像的缺点是容易使生成的业务镜像较大，比如centos7+java8+tomcat+应用，轻松过G，若是前端等，则可以使用小巧的基础镜像，比如alpine，busybox，debian等，但该镜像也有不足，镜像追求轻量级，很多基础工具都没有，需要用户自行安装。</p>
+<p>　　3.构建镜像时要保证层数尽可能的少，此处有一技巧，RUN 后面可跟随多条shell命令，以&amp;链接，同时执行完后一定要记得删除无用文件，以保障镜像最小化。</p>
+<p>　　所以基于以上几点，可根据公司需求，构建几版基础镜像，比如1、alpine+nginx+lua+curl+telnet等网络调试工具的前端基础镜像。2、alpine+java+tomcat+curl+telnet等调试工具的java基础镜像。3、基于centos和Ubuntu的核心服务镜像。等等等等，将基础镜像构建好后，就可以根据基础镜像设计持续集成流水线来自动化构建业务镜像了。</p>
+<p>　　继续聊聊基础镜像</p>
+<p>　　1、busybox</p>
+<p>　　此镜像集成了上百个linux常用命令，且镜像极小，大约2M，通过docker pull busybox:latest 即可，这个通常用来进行测试，比如写个yaml啥的</p>
+<p>　　2、alpine</p>
+<p>　　此镜像为一个轻量级安全向镜像，大小仅5M，关注安全，性能，资源效能，通过docker pull alpine可拉取镜像。鉴于我很多镜像都基于此镜像，这里多叨叨几句。此镜像采用apk安装应用，可在dockerfile</p>
+<p>中添加源</p>
+<p>　　中科大源：echo “<a href="http://mirrors.ustc.edu.cn/alpine/&quot;" target="_blank" rel="noopener">http://mirrors.ustc.edu.cn/alpine/&quot;</a> &gt; /etc/apk/repositories</p>
+<p>　　阿里源：echo “<a href="http://mirrors.aliyun.com/alpine/&quot;" target="_blank" rel="noopener">http://mirrors.aliyun.com/alpine/&quot;</a> &gt; /etc/apk/repositories</p>
+<p>　　清华源：echo “<a href="https://mirror.tuna.tsinghua.edu.cn/alpine/&quot;" target="_blank" rel="noopener">https://mirror.tuna.tsinghua.edu.cn/alpine/&quot;</a> &gt; /etc/apk/repositories</p>
+<p>　　apk –update add –no-cache</p>
+<p>　　即可安装，不过记得在安装后删除缓存，使镜像保持最小</p>
+<p>　　3、ubuntu/centos</p>
+<p>　　这两个属于重量级的镜像，就放在一起说吧，比较稳定，不过就是容易搞的镜像超大，轻松过G，恐怖如斯，如果有需要jdk和tomcat来运行的java应用，请做好思想准备</p>
+<p>　　参考资料：</p>
+<p>　　1.你必须知道的Dockerfile  <a href="https://www.cnblogs.com/edisonchou/p/dockerfile_inside_introduction.html" target="_blank" rel="noopener">https://www.cnblogs.com/edisonchou/p/dockerfile_inside_introduction.html</a>   <a href="https://www.cnblogs.com/edisonchou/" target="_blank" rel="noopener">https://www.cnblogs.com/edisonchou/</a></p>
+<p>　　2. Dockerfile命令详解 <a href="https://www.cnblogs.com/yanh0606/p/11360936.html" target="_blank" rel="noopener">https://www.cnblogs.com/yanh0606/p/11360936.html</a></p>
+<p>　　3.Dockerfile 中的 COPY 与 ADD 命令 <a href="https://www.cnblogs.com/sparkdev/p/9573248.html" target="_blank" rel="noopener">https://www.cnblogs.com/sparkdev/p/9573248.html</a> <a href="http://www.cnblogs.com/sparkdev/" target="_blank" rel="noopener">http://www.cnblogs.com/sparkdev/</a></p>
+<p>　　4.容器技术之Dockerfile （一） <a href="https://www.cnblogs.com/qiuhom-1874/p/13019411.html" target="_blank" rel="noopener">https://www.cnblogs.com/qiuhom-1874/p/13019411.html</a>  <a href="https://www.cnblogs.com/qiuhom-1874/" target="_blank" rel="noopener">https://www.cnblogs.com/qiuhom-1874/</a> </p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/" class="archive-article-date">
-  	<time datetime="2020-07-07T07:16:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/">记一次nexus事故</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nexus</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">devops</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">devops</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">容器</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -202,123 +279,117 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/10/dockerfile%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/07/SonatypeNexus%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF/" class="archive-article-date">
-  	<time datetime="2020-07-07T06:35:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-07</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/07/10/%E8%AE%B0%E4%B8%80%E6%AC%A1tar%E5%91%BD%E4%BB%A4%E5%BC%95%E5%8F%91%E7%9A%84%E4%BA%8B%E6%95%85/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">记一次tar命令引发的事故</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/07/SonatypeNexus%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF/">SonatypeNexus用户配置那点事儿</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nexus</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">devops</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/devops工具//" class="article-tag-list-link color4">devops工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    目录，不存在的…
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/06/nexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/" class="archive-article-date">
-  	<time datetime="2020-07-06T10:26:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/06/nexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/">nexus你需要知道的那些事儿</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nexus</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">devops</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/devops工具//" class="article-tag-list-link color4">devops工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -341,9 +412,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
