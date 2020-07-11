@@ -146,6 +146,100 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-go学习笔记day1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/">go学习笔记day1</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/" class="archive-article-date">
+  	<time datetime="2020-07-11T08:21:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>go语言基本语法（一）<br>1、声明变量<br>var a int //整型，保存整数数值<br>var b string //字符串类型<br>var c []float32 //32位浮点型<br>var d func() bool //布尔型的函数变量<br>var e struct{   // 声明一个结构体类型的变量<br>        x int   // 拥有一个整型x字段<br>}</p>
+<p>/* 除此之外还可以用一种懒汉型的变量申明方式<br>   用var 和括号 将一组变量放在一起<br> */</p>
+<p>var (<br>    a int<br>    b string<br>    c []float32<br>    d func() bool<br>    e struct{<br>        x int<br>    }<br>)</p>
+<p>变量在声明时，go语言自动会对变量对应的内存区域进行初始化操作，每个变量会初始化成其类型的默认值<br>int float ： 0<br>string ： 空<br>bool ： false<br>切片，函数，指针：nil<br>当然了，也可以在声明时赋值</p>
+<p>2、声明变量的标准格式<br>var 变量名 类型 = 表达式<br>例如：<br>初始财产为100<br>var gold int = 100</p>
+<p>3、短变量声明并初始化<br>var声明的精简写法<br>gold := 100</p>
+<p>注意！！！：当使用 := ，推导声明写法左侧必须是没有定义过的变量。在多个短变量声明和赋值中，至少有一个新声明出现在左值中，编译器便不会报错。</p>
+<p>4、多个变量同时赋值<br>变量交换<br>var a int = 100<br>var b int = 200<br>b,a = a,b<br>fmt.Println(a,b)</p>
+<p>5、匿名变量<br>多重赋值时，如果不需要在左值中接受变量，可使用匿名变量_<br>例如：<br>func GetWeight() (float32,float32) {<br>    return 90.51,86.72<br>}<br>a, _ := GetWeight()<br>_, b := GetWeight()<br>fmt.Println(a,b)</p>
+<p>代码输出<br>90.51 86.72</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">go</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/go语言//" class="article-tag-list-link color5">go语言</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-dockerfile的那些事儿" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -881,6 +975,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
               </li>
             
             <div class="clearfix"></div>
