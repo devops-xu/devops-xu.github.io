@@ -174,7 +174,8 @@
 <p>4、字符串<br>字符串在go语言中以原生数据类型出现，为双引号中的内容<br>例如：<br>单行字符串<br>str := “Hello World”<br>ch := “中文”<br>多行字符串<br>const str = <code>line1
 line2
 line3</code><br>字符串中的每一个元素则称为字符，字符有以下两种：<br>1、unit8 也会是byte型，代表了ASCII码的一个字符<br>2、rune 也就是int32，代表一个UTF-8字符，常用于处理中文，日文等<br>可以通过fmt.Printf中的%T来输出类型<br>例如：<br>代码如下<br><img src="/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go03.png" alt><br>输出结果为<br><img src="/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go04.png" alt></p>
-<p>字符串这里会涉及到转义符如下<br>\r    回车符，返回行首<br>\n    换行符，下一行的同一位置<br>\t    制表符<br>&#39;    单引号<br>&quot;    双引号<br>\    反斜杠<br>^    字符 ^<br>$    字符 $<br>.    字符 .<br>*    字符 *<br>+    字符 +<br>?    字符 ?<br>{    字符 {<br>}    字符 }<br>(    字符 (<br>)    字符 )<br>[    字符 [<br>]    字符 ]<br>|    字符 |</p>
+<p>字符串这里会涉及到转义符如下</p>
+<p><img src="/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go05.png" alt></p>
 
       
 
@@ -359,7 +360,7 @@ line3</code><br>字符串中的每一个元素则称为字符，字符有以下�
 <p>　　第二种镜像构建的方法则为dockerfile，通过dockerfile来控制镜像的构建。这个也是官方推荐的方案，同时毕业也推崇此方案。</p>
 <p>　　dockerfile为一个纯文本文件，通过指令来控制构建，常用指令如下：</p>
 <p>　　1.FROM 此指令后面跟随的为基础镜像。例如:FROM centos:7 引用基础镜像centos:7</p>
-<p>　　2.MAINTAINER 此指令用于维护构建者信息。例如:MAINTAINER XuPangzi <a href="mailto:&#80;&#97;&#110;&#103;&#122;&#105;&#64;&#101;&#120;&#97;&#109;&#x70;&#x6c;&#101;&#x2e;&#99;&#x6f;&#x6d;">&#80;&#97;&#110;&#103;&#122;&#105;&#64;&#101;&#120;&#97;&#109;&#x70;&#x6c;&#101;&#x2e;&#99;&#x6f;&#x6d;</a></p>
+<p>　　2.MAINTAINER 此指令用于维护构建者信息。例如:MAINTAINER XuPangzi <a href="mailto:&#80;&#97;&#110;&#103;&#122;&#105;&#x40;&#x65;&#120;&#x61;&#109;&#x70;&#108;&#101;&#46;&#x63;&#111;&#x6d;">&#80;&#97;&#110;&#103;&#122;&#105;&#x40;&#x65;&#120;&#x61;&#109;&#x70;&#108;&#101;&#46;&#x63;&#111;&#x6d;</a></p>
 <p>　　3.LABEL 用于添加标签。例如:LABEL BASE FOR SPRING-CLOUD</p>
 <p>　　4.COPY 用于拷贝文件，不解压。例如:COPY tomcat.tar  /opt/</p>
 <p>　　5.ADD 用户拷贝文件，可解压。例如:ADD tomcat.tar /opt/</p>
@@ -1030,15 +1031,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">nexus</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">go</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
