@@ -16,9 +16,8 @@
 <meta property="og:description" content="背景：1、公司的cicd流水线会根据环境封装多个产出包，包内容仅配置文件存在差异，其余文件均相同2、替换配置文件的脚本由项目组自行维护，项目组选择了使用tar -u的方式替换同名配置文件 问题复现：1、在一台崭新的机器上clone项目，并执行构建2、执行配置文件替换脚本replaceconfig.sh3、观察控制台输出日志，发现从第二个环境起，未输出配置文件替换信息，拆开部署包发现，配置文件均为u">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-10T02:34:17.000Z">
-<meta property="article:modified_time" content="2020-07-10T03:41:58.636Z">
+<meta property="article:modified_time" content="2020-07-11T15:51:31.459Z">
 <meta property="article:author" content="Devops旭">
-<meta property="article:tag" content="事故">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
   
@@ -208,10 +207,6 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">事故</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
         		</li>
       		
@@ -343,14 +338,15 @@
 
 
   
-  
-  
 
   
 
   
 
   
+
+  
+
 
 
           </div>
@@ -381,7 +377,7 @@
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -447,11 +443,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">devops</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">容器</a>
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -459,15 +451,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">事故</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">go</a>
               </li>
             
             <div class="clearfix"></div>

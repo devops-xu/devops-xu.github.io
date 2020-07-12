@@ -146,6 +146,100 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-go学习笔记day2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/">go学习笔记day2</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/" class="archive-article-date">
+  	<time datetime="2020-07-12T09:14:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>go语言基本语法（二）数据类型<br>1、整型<br>按长度分为：int8、int16、int32、int64<br>无符号整型：uint8、uint16、uint32、uint64</p>
+<p>其中uint8 为byte型，uint16 对应c语言的short型，unit64对应c语言中的long型</p>
+<p>注意：在使用 int和uint时，要考虑在不同平台上的差异</p>
+<p>2、浮点型<br>Go语言支持两种浮点型：float32和float64，遵循IEEE754标准<br>float32的浮点数的最大范围为3.4e38 可用定义为常量： math.Maxfloat32<br>float64的浮点数的最大范围为1.8e308 可用定义为常量：math.Maxfloat64<br>打印浮点数时，可以使用fmt包配合动词”%f”<br>代码如下<br><img src="/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go01.png" alt><br>输出结果如下<br><img src="/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go02.png" alt></p>
+<p>3、bool型<br>Go语言中不允许强制转换为bool型</p>
+<p>4、字符串<br>字符串在go语言中以原生数据类型出现，为双引号中的内容<br>例如：<br>单行字符串<br>str := “Hello World”<br>ch := “中文”<br>多行字符串<br>const str = <code>line1
+line2
+line3</code><br>字符串中的每一个元素则称为字符，字符有以下两种：<br>1、unit8 也会是byte型，代表了ASCII码的一个字符<br>2、rune 也就是int32，代表一个UTF-8字符，常用于处理中文，日文等<br>可以通过fmt.Printf中的%T来输出类型<br>例如：<br>代码如下<br><img src="/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go03.png" alt><br>输出结果为<br><img src="/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go04.png" alt></p>
+<p>字符串这里会涉及到转义符如下<br>\r    回车符，返回行首<br>\n    换行符，下一行的同一位置<br>\t    制表符<br>&#39;    单引号<br>&quot;    双引号<br>\    反斜杠<br>^    字符 ^<br>$    字符 $<br>.    字符 .<br>*    字符 *<br>+    字符 +<br>?    字符 ?<br>{    字符 {<br>}    字符 }<br>(    字符 (<br>)    字符 )<br>[    字符 [<br>]    字符 ]<br>|    字符 |</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">go</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/go语言//" class="article-tag-list-link color5">go语言</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
     <article id="post-go学习笔记day1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -239,6 +333,7 @@
 
 
 
+
   
     <article id="post-dockerfile的那些事儿" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -264,7 +359,7 @@
 <p>　　第二种镜像构建的方法则为dockerfile，通过dockerfile来控制镜像的构建。这个也是官方推荐的方案，同时毕业也推崇此方案。</p>
 <p>　　dockerfile为一个纯文本文件，通过指令来控制构建，常用指令如下：</p>
 <p>　　1.FROM 此指令后面跟随的为基础镜像。例如:FROM centos:7 引用基础镜像centos:7</p>
-<p>　　2.MAINTAINER 此指令用于维护构建者信息。例如:MAINTAINER XuPangzi <a href="mailto:&#x50;&#x61;&#110;&#x67;&#122;&#x69;&#64;&#x65;&#120;&#97;&#x6d;&#x70;&#108;&#x65;&#x2e;&#99;&#111;&#x6d;">&#x50;&#x61;&#110;&#x67;&#122;&#x69;&#64;&#x65;&#120;&#97;&#x6d;&#x70;&#108;&#x65;&#x2e;&#99;&#111;&#x6d;</a></p>
+<p>　　2.MAINTAINER 此指令用于维护构建者信息。例如:MAINTAINER XuPangzi <a href="mailto:&#80;&#97;&#110;&#103;&#122;&#105;&#64;&#101;&#120;&#97;&#109;&#x70;&#x6c;&#101;&#x2e;&#99;&#x6f;&#x6d;">&#80;&#97;&#110;&#103;&#122;&#105;&#64;&#101;&#120;&#97;&#109;&#x70;&#x6c;&#101;&#x2e;&#99;&#x6f;&#x6d;</a></p>
 <p>　　3.LABEL 用于添加标签。例如:LABEL BASE FOR SPRING-CLOUD</p>
 <p>　　4.COPY 用于拷贝文件，不解压。例如:COPY tomcat.tar  /opt/</p>
 <p>　　5.ADD 用户拷贝文件，可解压。例如:ADD tomcat.tar /opt/</p>
@@ -320,14 +415,6 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">devops</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">容器</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
         		</li>
       		
@@ -378,6 +465,7 @@
 
 
 
+
   
     <article id="post-记一次tar命令引发的事故" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -415,10 +503,6 @@
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">事故</a>
-        		</li>
-      		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
         		</li>
@@ -466,6 +550,7 @@
         
     </div>
 </aside>
+
 
 
 
@@ -537,10 +622,6 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nexus</a>
         		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">devops</a>
-        		</li>
       		
 		</ul>
 	</div>
@@ -585,6 +666,7 @@
         
     </div>
 </aside>
+
 
 
 
@@ -639,10 +721,6 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nexus</a>
         		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">devops</a>
-        		</li>
       		
 		</ul>
 	</div>
@@ -687,6 +765,7 @@
         
     </div>
 </aside>
+
 
 
 
@@ -808,10 +887,6 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nexus</a>
         		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">devops</a>
-        		</li>
       		
 		</ul>
 	</div>
@@ -860,6 +935,7 @@
 
 
 
+
   
   
 
@@ -892,7 +968,7 @@
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -958,11 +1034,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">devops</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">容器</a>
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -970,15 +1042,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">事故</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">go</a>
               </li>
             
             <div class="clearfix"></div>

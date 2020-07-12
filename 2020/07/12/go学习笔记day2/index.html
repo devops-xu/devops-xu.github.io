@@ -6,15 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 容器 | Devops技术小站</title>
+  <title>go学习笔记day2 | Devops技术小站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Devops技术小站">
-<meta property="og:url" content="http://yoursite.com/tags/%E5%AE%B9%E5%99%A8/index.html">
+  <meta name="description" content="go语言基本语法（二）数据类型1、整型按长度分为：int8、int16、int32、int64无符号整型：uint8、uint16、uint32、uint64 其中uint8 为byte型，uint16 对应c语言的short型，unit64对应c语言中的long型 注意：在使用 int和uint时，要考虑在不同平台上的差异 2、浮点型Go语言支持两种浮点型：float32和float64，遵循I">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go学习笔记day2">
+<meta property="og:url" content="http://yoursite.com/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/index.html">
 <meta property="og:site_name" content="Devops技术小站">
+<meta property="og:description" content="go语言基本语法（二）数据类型1、整型按长度分为：int8、int16、int32、int64无符号整型：uint8、uint16、uint32、uint64 其中uint8 为byte型，uint16 对应c语言的short型，unit64对应c语言中的long型 注意：在使用 int和uint时，要考虑在不同平台上的差异 2、浮点型Go语言支持两种浮点型：float32和float64，遵循I">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go01.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go02.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go03.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go04.png">
+<meta property="article:published_time" content="2020-07-12T09:14:56.000Z">
+<meta property="article:modified_time" content="2020-07-12T09:14:56.210Z">
 <meta property="article:author" content="Devops旭">
+<meta property="article:tag" content="go">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go01.png">
   
     <link rel="alternative" href="/atom.xml" title="Devops技术小站" type="application/atom+xml">
   
@@ -144,79 +154,200 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-go学习笔记day2" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/10/dockerfile%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/" class="archive-article-date">
-  	<time datetime="2020-07-10T14:32:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-10</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/10/dockerfile%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/">dockerfile的那些事儿</a>
+    <h1 class="article-title" itemprop="name">
+      go学习笔记day2
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/" class="archive-article-date">
+  	<time datetime="2020-07-12T09:14:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>go语言基本语法（二）数据类型<br>1、整型<br>按长度分为：int8、int16、int32、int64<br>无符号整型：uint8、uint16、uint32、uint64</p>
+<p>其中uint8 为byte型，uint16 对应c语言的short型，unit64对应c语言中的long型</p>
+<p>注意：在使用 int和uint时，要考虑在不同平台上的差异</p>
+<p>2、浮点型<br>Go语言支持两种浮点型：float32和float64，遵循IEEE754标准<br>float32的浮点数的最大范围为3.4e38 可用定义为常量： math.Maxfloat32<br>float64的浮点数的最大范围为1.8e308 可用定义为常量：math.Maxfloat64<br>打印浮点数时，可以使用fmt包配合动词”%f”<br>代码如下<br><img src="/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go01.png" alt><br>输出结果如下<br><img src="/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go02.png" alt></p>
+<p>3、bool型<br>Go语言中不允许强制转换为bool型</p>
+<p>4、字符串<br>字符串在go语言中以原生数据类型出现，为双引号中的内容<br>例如：<br>单行字符串<br>str := “Hello World”<br>ch := “中文”<br>多行字符串<br>const str = <code>line1
+line2
+line3</code><br>字符串中的每一个元素则称为字符，字符有以下两种：<br>1、unit8 也会是byte型，代表了ASCII码的一个字符<br>2、rune 也就是int32，代表一个UTF-8字符，常用于处理中文，日文等<br>可以通过fmt.Printf中的%T来输出类型<br>例如：<br>代码如下<br><img src="/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go03.png" alt><br>输出结果为<br><img src="/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go04.png" alt></p>
+<p>字符串这里会涉及到转义符如下<br>\r    回车符，返回行首<br>\n    换行符，下一行的同一位置<br>\t    制表符<br>&#39;    单引号<br>&quot;    双引号<br>\    反斜杠<br>^    字符 ^<br>$    字符 $<br>.    字符 .<br>*    字符 *<br>+    字符 +<br>?    字符 ?<br>{    字符 {<br>}    字符 }<br>(    字符 (<br>)    字符 )<br>[    字符 [<br>]    字符 ]<br>|    字符 |</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">devops</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">容器</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">go</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/devops工具//" class="article-tag-list-link color4">devops工具</a>
+        			<a href="/categories/go语言//" class="article-tag-list-link color5">go语言</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/07/11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">go学习笔记day1</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    目录，不存在的…
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
   
 
-    
+  
+
+  
+
+  
+
+  
+
 
 
           </div>
@@ -239,15 +370,15 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -313,11 +444,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">devops</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">容器</a>
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -325,15 +452,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">事故</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">go</a>
               </li>
             
             <div class="clearfix"></div>

@@ -16,10 +16,8 @@
 <meta property="og:description" content="docker容器的制作方式主要为两种，第一种为从容器构建镜像，即容器镜像，通过docker commit 的方式进行构建，该方法本菜鸟并不推荐，原因有如下几点：1）镜像为分层结构，容器则为镜像顶层加了一个可写层，这一方式构建的镜像极容易镜像过大。2）容器镜像无法确定这一层可写层内的内容，对于安全性上，存在问题，而且也不易维护。 　　第二种镜像构建的方法则为dockerfile，通过docker">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-10T14:32:30.000Z">
-<meta property="article:modified_time" content="2020-07-10T14:32:30.737Z">
+<meta property="article:modified_time" content="2020-07-11T15:51:57.397Z">
 <meta property="article:author" content="Devops旭">
-<meta property="article:tag" content="devops">
-<meta property="article:tag" content="容器">
 <meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
   
@@ -175,7 +173,7 @@
 <p>　　第二种镜像构建的方法则为dockerfile，通过dockerfile来控制镜像的构建。这个也是官方推荐的方案，同时毕业也推崇此方案。</p>
 <p>　　dockerfile为一个纯文本文件，通过指令来控制构建，常用指令如下：</p>
 <p>　　1.FROM 此指令后面跟随的为基础镜像。例如:FROM centos:7 引用基础镜像centos:7</p>
-<p>　　2.MAINTAINER 此指令用于维护构建者信息。例如:MAINTAINER XuPangzi <a href="mailto:&#x50;&#x61;&#110;&#x67;&#122;&#x69;&#64;&#x65;&#120;&#97;&#x6d;&#x70;&#108;&#x65;&#x2e;&#99;&#111;&#x6d;">&#x50;&#x61;&#110;&#x67;&#122;&#x69;&#64;&#x65;&#120;&#97;&#x6d;&#x70;&#108;&#x65;&#x2e;&#99;&#111;&#x6d;</a></p>
+<p>　　2.MAINTAINER 此指令用于维护构建者信息。例如:MAINTAINER XuPangzi <a href="mailto:&#80;&#97;&#110;&#103;&#122;&#105;&#64;&#101;&#120;&#97;&#109;&#x70;&#x6c;&#101;&#x2e;&#99;&#x6f;&#x6d;">&#80;&#97;&#110;&#103;&#122;&#105;&#64;&#101;&#120;&#97;&#109;&#x70;&#x6c;&#101;&#x2e;&#99;&#x6f;&#x6d;</a></p>
 <p>　　3.LABEL 用于添加标签。例如:LABEL BASE FOR SPRING-CLOUD</p>
 <p>　　4.COPY 用于拷贝文件，不解压。例如:COPY tomcat.tar  /opt/</p>
 <p>　　5.ADD 用户拷贝文件，可解压。例如:ADD tomcat.tar /opt/</p>
@@ -251,14 +249,6 @@
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">devops</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">容器</a>
-        		</li>
-      		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
         		</li>
@@ -391,14 +381,15 @@
 
 
   
-  
-  
 
   
 
   
 
   
+
+  
+
 
 
           </div>
@@ -429,7 +420,7 @@
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -495,11 +486,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">devops</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">容器</a>
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -507,15 +494,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">事故</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">go</a>
               </li>
             
             <div class="clearfix"></div>
