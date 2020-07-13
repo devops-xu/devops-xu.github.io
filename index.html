@@ -146,6 +146,136 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-go学习笔记day3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/13/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day3/">go学习笔记day3</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/13/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day3/" class="archive-article-date">
+  	<time datetime="2020-07-13T06:32:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>go学习笔记（三）指针</p>
+<p>指针地址：每个变量在运行时都有一个地址，这个地址代表变量在内存中的位置。Go语言中使用&amp;操作符放在变量前面对变量进行取地址操作。<br>例：<br>ptr := &amp;v        // v的类型为T</p>
+<p>v表示被取地址的变量，被取地址的v使用ptr进行接收，ptr的类型为<em>T，称作T的指针类型，</em>代表指针<br>指针使用代码案例如下：</p>
+<p>package main</p>
+<p>import “fmt”</p>
+<p>func main() {<br>    var cat int = 1            //声明整型变量cat<br>    var str string = “applt”    //声明字符串变量str<br>    fmt.Printf(“%p %p”, &amp;cat, &amp;str)    //%p输出指针<br>}</p>
+<p>执行结果为<br>0xc00006e090 0xc0000561e0    //0x为16进制前缀，输出结果每次均不会相同，代表变量运行时的地址</p>
+<p>package main</p>
+<p>import “fmt”</p>
+<p>func main () {<br>    //声明字符串<br>    var flower = “腰花”</p>
+<pre><code>//对字符串取地址
+ptr := &amp;flower
+
+//打印ptr指针类型
+fmt.Printf(&quot;type: %T\n&quot;, ptr)
+
+//打印ptr指针地址
+fmt.Printf(&quot;address: %p\n&quot;, ptr)
+
+//对指针取值
+value := *ptr
+
+//取值后的类型
+fmt.Printf(&quot;type: %T\n&quot;, value)
+
+//指针取值后就是指向变量的值
+fmt.Printf(&quot;value: %s\n&quot;, value)</code></pre><p>}<br>执行结果如下<br>type: *string<br>address: 0xc0000421f0<br>type: string<br>value: 腰花</p>
+<p>取地址操作符&amp;和取值操作符<em>是一对互补的操作符，&amp;取地址，</em>根据地址取出地址指向的值</p>
+<p>变量、指针地址、指针变量、取地址、取值的相互关系和特性</p>
+<p>a、对变量进行取地址&amp;操作，可以获取这个指针变量指向的原变量的值<br>b、指针变量的值是指针地址<br>c、对指针变量进行取值*操作，可以获得指针变量指向的原变量的值</p>
+<p>使用指针进行数值交换来修改值<br>代码如下<br>package main</p>
+<p>import “fmt”</p>
+<p>//交换函数<br>func swap(a,b <em>int) {    //</em>int，指针类型<br>    //取a指针的值<br>    t := *a</p>
+<pre><code>//取b指针的值
+*a = *b
+
+//将a指针的值赋给b指针指向的变量
+*b = t</code></pre><p>}</p>
+<p>func main() {<br>    //变量赋值3 4<br>    x,y := 3,4</p>
+<pre><code>//交换变量
+swap(&amp;x, &amp;y)
+
+//输出变量
+fmt.Println(x,y)</code></pre><p>}<br>输出结果为<br>4 3</p>
+<p>*操作符的根本意义就是操作指针指向的变量，当操作在右值时，就是取指向变量的值，当操作在左值时，就是将值设置给指向的变量。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">go</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/go语言//" class="article-tag-list-link color5">go语言</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/13/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
     <article id="post-go学习笔记day2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
