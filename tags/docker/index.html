@@ -6,17 +6,13 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Devops技术小站</title>
+  <title>Tag: docker | Devops技术小站</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    
-    <!-- <meta name="keywords" content="">
-    <meta name="description" content=""> -->
-  
   <meta property="og:type" content="website">
 <meta property="og:title" content="Devops技术小站">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/tags/docker/index.html">
 <meta property="og:site_name" content="Devops技术小站">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Devops旭">
@@ -172,209 +168,40 @@
           </div>
           <div id="js-content" class="content-ll">
             
-
-  
-    <article id="post-记一次nexus事故" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/04/14/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/" target="_blank">记一次nexus事故</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/04/14/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/" class="archive-article-date">
-        <time datetime="2020-04-14T07:14:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-14</time>
-</a>
-
   
   
     
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
     
-    <p>一、事故背景<br>nexus 因产生脏数据导致数据不一致，生成大量日志文件，并且并发的有OOM，nexus服务挂了</p>
-<p>二、紧急灾难处理<br>1、通过最新的nexus备份数据进行备机启动，先恢复服务避免影响扩大<br>2、因域名切换需要一定时间，在切换域名指向IP前先检查备份数据正确性<br>进入nexus工作目录/opt/nexus/后执行命令java -jar ./lib/support/nexus-orient-console.jar 进入orientdb命令行<br>3、执行命令：CONNECT PLOCAL:/opt/sonatype-work/nexus3/db/${dbname} admin admin 连接到数据库并执行命令检查数据文件<br>REBUILD INDEX *</p>
-<p>REPAIR DATABASE –fix-graph</p>
-<p>REPAIR DATABASE –fix-links</p>
-<p>REPAIR DATABASE –fix-ridbags</p>
-<p>REPAIR DATABASE –fix-bonsai<br>4、修复完毕后修改文件属主属组为nexus，并启动nexus备库，至此，备库开始提供服务</p>
-<p>三、事故定位<br>1、查看日志，发现日志报错如下<br><img src="/2020/04/14/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/nexus1.jpg" alt><br>经确认，assetdownloadcount记录的是asset下载次数的数据，报错是因为记录delete失败，该表数据并不重要，故采用人工删除的方式解决，筛选日志，发现需要删除的表为truncate cluster assetdownloadcount_3，truncate cluster assetdownloadcount_5，truncate cluster assetdownloadcount_10，truncate cluster assetdownloadcount_15<br>2、尝试启动服务，发现有日志报错为<br><img src="/2020/04/14/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/nexus2.jpg" alt><br><img src="/2020/04/14/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/nexus3.jpg" alt><br>定位为INDEX quartz_job_detail_name_group_idx重复导致</p>
-<p>四、事故处理<br>1、进入/opt/nexus/目录下，执行命令：java -jar ./lib/support/nexus-orient-console.jar 进入orientdb命令行，并执行命令：CONNECT PLOCAL:/opt/sonatype-work/nexus3/db/component admin admin 连接到component库后执行命令：</p>
-<p>truncate cluster assetdownloadcount_3</p>
-<p>truncate cluster assetdownloadcount_5</p>
-<p>truncate cluster assetdownloadcount_10</p>
-<p>truncate cluster assetdownloadcount_15</p>
-<p>删除有问题的cluster<br>2、执行命令：CONNECT PLOCAL:/opt/sonatype-work/nexus3/db/config admin admin 连接到config库<br>执行命令：drop INDEX quartz_job_detail_name_group_idx</p>
-<p>3、依次修复所有库的数据<br>REBUILD INDEX *</p>
-<p>REPAIR DATABASE –fix-graph</p>
-<p>REPAIR DATABASE –fix-links</p>
-<p>REPAIR DATABASE –fix-ridbags</p>
-<p>REPAIR DATABASE –fix-bonsai<br>4、重启nexus 发现服务正常，日志输出正常，至此，问题完美解决<br>5、修改数据备份策略，此时主备库以互换</p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nexus</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/devops工具//" class="article-tag-list-link color4">devops工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/04/14/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-dockerfile那点事儿" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+        <div class="archives">
     
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/08/11/dockerfile%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF/" target="_blank">dockerfile那点事儿</a>
-  
-    </h1>
-  
-
-
-  
-  
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	
 <a href="/2019/08/11/dockerfile%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF/" class="archive-article-date">
         <time datetime="2019-08-11T07:32:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-11</time>
 </a>
 
+        </div>
+    	 
   
+    <h1 itemprop="name">
+	
+	  <a class="archive-article-title" href="/2019/08/11/dockerfile%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF/" target="_blank">dockerfile那点事儿</a>
   
-    
-
+    </h1>
   
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>　　docker容器的制作方式主要为两种，第一种为从容器构建镜像，即容器镜像，通过docker commit 的方式进行构建，该方法本菜鸟并不推荐，原因有如下几点：1）镜像为分层结构，容器则为镜像顶层加了一个可写层，这一方式构建的镜像极容易镜像过大。2）容器镜像无法确定这一层可写层内的内容，对于安全性上，存在问题，而且也不易维护。</p>
-<p>　　第二种镜像构建的方法则为dockerfile，通过dockerfile来控制镜像的构建。这个也是官方推荐的方案，同时毕业也推崇此方案。</p>
-<p>　　dockerfile为一个纯文本文件，通过指令来控制构建，常用指令如下：</p>
-<p>　　1.FROM 此指令后面跟随的为基础镜像。例如:FROM centos:7 引用基础镜像centos:7</p>
-<p>　　2.MAINTAINER 此指令用于维护构建者信息。例如:MAINTAINER XuPangzi <a href="mailto:&#80;&#x61;&#x6e;&#103;&#122;&#x69;&#x40;&#101;&#120;&#97;&#109;&#x70;&#108;&#101;&#46;&#99;&#x6f;&#109;">&#80;&#x61;&#x6e;&#103;&#122;&#x69;&#x40;&#101;&#120;&#97;&#109;&#x70;&#108;&#101;&#46;&#99;&#x6f;&#109;</a></p>
-<p>　　3.LABEL 用于添加标签。例如:LABEL BASE FOR SPRING-CLOUD</p>
-<p>　　4.COPY 用于拷贝文件，不解压。例如:COPY tomcat.tar  /opt/</p>
-<p>　　5.ADD 用户拷贝文件，可解压。例如:ADD tomcat.tar /opt/</p>
-<p>　　6.RUN 用于执行shell命令。例如:RUN  mkdir -p /app/{log,data,conf,lib}</p>
-<p>　　7.WORKDIR 用于设置工作目录，即进入容器后的默认目录。例如:WORKDIR /app</p>
-<p>　　8.USER 为运行shell命令的用户。例如:USER app</p>
-<p>　　　　　　　　　　　　　　　　　　　USER app:app</p>
-<p>　　　　　　　　　　　　　　　　　　　USER 500</p>
-<p>　　　　　　　　　　　　　　　　　　　USER 500:500</p>
-<p>　　　　　　　　　　　　　　　　　　　USER app:500</p>
-<p>　　　　　　　　　　　　　　　　　　　USER 500:app</p>
-<p>　　9.EXPOSE 声明端口。例如:EXPOSE 8881</p>
-<p>　　10.ENV 环境变量。例如:ENV MYSQL_PORT 8306</p>
-<p>　　11.ENTRYPOINT 容器启动时执行的命令，不会被docker run 覆盖。例如:ENTRYPOINT [“/bin/bash”,”-C”,”/opt/apache-tomcat/start.sh”]  exec 风格  ENTRYPOINT /bin/bash  -C /opt/apache-tomcat/start.sh shell风格</p>
-<p>　　12.CMD 容器启动时执行的shell命令</p>
-<p>　　谈完dockerfile，该谈一下构建镜像了。通常都是采用 docker build -t example:v1 . 在dockerfile所在目录执行即可，同时ADD和COPY的文件也需要在dockerfile同级，不过为了匹配流水线作业，通常会采用另外一种方式进行构建:</p>
-<p>　　1.用户自备dockerfile 同时dockerfile以应用来命名，例如APP1_dockerfile，在构建镜像时，执行命令 docker build –no-cache=true -t app_A:v1 -f APP1_dockerfile .</p>
-<p>　　2.将dockerfile植入到构建脚本中，通过构建是引入的参数来生成dockerfile 同时构建镜像，此方式下仍建议采用命令docker build –no-cache=true -t app_A:v1 -f APP1_dockerfile .</p>
-<p>　　</p>
-<p>　　实践：</p>
-<p>　　1.镜像最好是自己构建，从dockerhub或其他平台pull的私人镜像，无法保证是否里面埋有不安全插件，为了保障安全，推荐自己构建镜像</p>
-<p>　　2.选择恰当的基础镜像，核心应用，选择较大且稳定的镜像，比如centos，ubuntu，但该镜像的缺点是容易使生成的业务镜像较大，比如centos7+java8+tomcat+应用，轻松过G，若是前端等，则可以使用小巧的基础镜像，比如alpine，busybox，debian等，但该镜像也有不足，镜像追求轻量级，很多基础工具都没有，需要用户自行安装。</p>
-<p>　　3.构建镜像时要保证层数尽可能的少，此处有一技巧，RUN 后面可跟随多条shell命令，以&amp;链接，同时执行完后一定要记得删除无用文件，以保障镜像最小化。</p>
-<p>　　所以基于以上几点，可根据公司需求，构建几版基础镜像，比如1、alpine+nginx+lua+curl+telnet等网络调试工具的前端基础镜像。2、alpine+java+tomcat+curl+telnet等调试工具的java基础镜像。3、基于centos和Ubuntu的核心服务镜像。等等等等，将基础镜像构建好后，就可以根据基础镜像设计持续集成流水线来自动化构建业务镜像了。</p>
-<p>　　继续聊聊基础镜像</p>
-<p>　　1、busybox</p>
-<p>　　此镜像集成了上百个linux常用命令，且镜像极小，大约2M，通过docker pull busybox:latest 即可，这个通常用来进行测试，比如写个yaml啥的</p>
-<p>　　2、alpine</p>
-<p>　　此镜像为一个轻量级安全向镜像，大小仅5M，关注安全，性能，资源效能，通过docker pull alpine可拉取镜像。鉴于我很多镜像都基于此镜像，这里多叨叨几句。此镜像采用apk安装应用，可在dockerfile</p>
-<p>中添加源</p>
-<p>　　中科大源：echo “<a href="http://mirrors.ustc.edu.cn/alpine/&quot;" target="_blank" rel="noopener">http://mirrors.ustc.edu.cn/alpine/&quot;</a> &gt; /etc/apk/repositories</p>
-<p>　　阿里源：echo “<a href="http://mirrors.aliyun.com/alpine/&quot;" target="_blank" rel="noopener">http://mirrors.aliyun.com/alpine/&quot;</a> &gt; /etc/apk/repositories</p>
-<p>　　清华源：echo “<a href="https://mirror.tuna.tsinghua.edu.cn/alpine/&quot;" target="_blank" rel="noopener">https://mirror.tuna.tsinghua.edu.cn/alpine/&quot;</a> &gt; /etc/apk/repositories</p>
-<p>　　apk –update add –no-cache</p>
-<p>　　即可安装，不过记得在安装后删除缓存，使镜像保持最小</p>
-<p>　　3、ubuntu/centos</p>
-<p>　　这两个属于重量级的镜像，就放在一起说吧，比较稳定，不过就是容易搞的镜像超大，轻松过G，恐怖如斯，如果有需要jdk和tomcat来运行的java应用，请做好思想准备</p>
-<p>　　参考资料：</p>
-<p>　　1.你必须知道的Dockerfile  <a href="https://www.cnblogs.com/edisonchou/p/dockerfile_inside_introduction.html" target="_blank" rel="noopener">https://www.cnblogs.com/edisonchou/p/dockerfile_inside_introduction.html</a>   <a href="https://www.cnblogs.com/edisonchou/" target="_blank" rel="noopener">https://www.cnblogs.com/edisonchou/</a></p>
-<p>　　2. Dockerfile命令详解 <a href="https://www.cnblogs.com/yanh0606/p/11360936.html" target="_blank" rel="noopener">https://www.cnblogs.com/yanh0606/p/11360936.html</a></p>
-<p>　　3.Dockerfile 中的 COPY 与 ADD 命令 <a href="https://www.cnblogs.com/sparkdev/p/9573248.html" target="_blank" rel="noopener">https://www.cnblogs.com/sparkdev/p/9573248.html</a> <a href="http://www.cnblogs.com/sparkdev/" target="_blank" rel="noopener">http://www.cnblogs.com/sparkdev/</a></p>
-<p>　　4.容器技术之Dockerfile （一） <a href="https://www.cnblogs.com/qiuhom-1874/p/13019411.html" target="_blank" rel="noopener">https://www.cnblogs.com/qiuhom-1874/p/13019411.html</a>  <a href="https://www.cnblogs.com/qiuhom-1874/" target="_blank" rel="noopener">https://www.cnblogs.com/qiuhom-1874/</a> </p>
 
-    
 
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -386,7 +213,7 @@
 		</ul>
 	</div>
 
-    
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -399,218 +226,17 @@
 	</div>
 
 
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/08/11/dockerfile%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SonatypeNexus你需要知道的那些事儿" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/" target="_blank">SonatypeNexus你需要知道的那些事儿</a>
+    </div></section>
   
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/" class="archive-article-date">
-        <time datetime="2019-08-06T01:17:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-06</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>一、背景<br>公司计划做devops技术栈，在制品库选型时选择了SonatypeNexus作为制品管理工具。Sonatype nexus 是sonatype公司的一款制品管理工具，自身提供了OSS 开源免费版及PRO商业版，同时nexus自身具有多方面的优势，首先，管理制品种类多，可以管理maven，docker，npm，go等主流语言的制品，同时在权限配置和用户配置上具有的优势，可以实现针对制品的降权处理。同时官方也提供了丰富的api文档，可以灵活的针对nexus进行二次开发，实现devops工具的多种需求。<br>二、工具下载<br>Nexus提供了二进制部署及镜像部署这两种方式，首先二进制部署可通过<a href="https://help.sonatype.com/repomanager3/download/download-archives---repository-manager-3" target="_blank" rel="noopener">https://help.sonatype.com/repomanager3/download/download-archives---repository-manager-3</a> 下载，镜像可通过<a href="https://hub.docker.com/r/sonatypenexus3/tags/" target="_blank" rel="noopener">https://hub.docker.com/r/sonatypenexus3/tags/</a> 进行下载。PS:1、站点在国外，所以二进制下载常常会出现下载失败的现象，这个可以可以通过反复下载赌运气，或者是买一个其他地区的服务器转发（成本好高呀）2、镜像下载就好多了，可以通过阿里云的加速器，下载速度还是让人可以接受的。</p>
-<p>三、服务部署<br>3.1 部署需求<br>官方建议配置如下<br>CPU:最少为4，推荐为8+<br>内存:建议8G起步，规模大可考虑16G甚至是32G+<br>JAVA:JDK8<br>句柄数:至少为65536<br>磁盘空间:多多益善，官方建议500G</p>
-<p>综合考虑我公司现状，nexus配置为<br>CPU：8核<br>内存：16G<br>存储：500G</p>
-<p>3.2 服务部署<br>部署这里共探索了两种主流方案，方案如下<br>方案一、二进制部署<br>1、 创建程序用户</p>
-<p>useradd nexus</p>
-<p>2、 修改句柄数</p>
-<p>在 /etc/security/limits.conf 中添加</p>
-<p>nexus - nofile 65536</p>
-<p>3、 重启服务</p>
-<p>reboot</p>
-<p>4、 部署java</p>
-<p>tar zvxf jdk-8u231-linux-x64.tar.gz</p>
-<p>mv jdk-8u231 /opt/jdk</p>
-<p>修改 /etc/profile</p>
-<p>export JAVA_HOME=/opt/jdk</p>
-<p>export PATH=$JAVA_HOME/bin:$PATH</p>
-<p>export CLASSPATH=.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$JAVA_HOME/lib/tools.jar</p>
-<p>保存后执行 source /etc/profile</p>
-<p>5、 部署nexus</p>
-<p>cd /opt</p>
-<p>wget <a href="http://download.sonatype.comnexus/3nexus-3.24.0-02-unix.tar.gz" target="_blank" rel="noopener">http://download.sonatype.comnexus/3nexus-3.24.0-02-unix.tar.gz</a></p>
-<p>tar zvxf nexus-3.24.0-02-unix.tar.gz</p>
-<p>mv nexus-3.24.0-02 nexus</p>
-<p>cd nexus/bin</p>
-<p>在nexus 中修改第14行</p>
-<h1 id="INSTALL4J-JAVA-HOME-OVERRIDE"><a href="#INSTALL4J-JAVA-HOME-OVERRIDE" class="headerlink" title="INSTALL4J_JAVA_HOME_OVERRIDE="></a>INSTALL4J_JAVA_HOME_OVERRIDE=</h1><p>为java的部署路径否则有概率启动报错</p>
-<p>在nexus.rc中修改为</p>
-<p>run_as_user=”nexus”</p>
-<p>在/optnexus/etcnexus-default.properties中可修改默认端口（可选）</p>
-<p>修改文件权限</p>
-<p>chown -R nexus:nexus /optnexus</p>
-<p>chown -R nexus:nexus /opt/sonatype-work</p>
-<p>切换用户，启动服务</p>
-<p>su nexus</p>
-<p>cd /optnexus/bin</p>
-<p>.nexus start</p>
-<p>方案二 容器部署<br>docker run \</p>
-<p>-p 8081:8081 \</p>
-<p>–name nexus \</p>
-<p>–ulimit nofile=65536:65536 \</p>
-<p>–restart always \</p>
-<p>sonatypenexus3</p>
-<p>即可完成部署</p>
-<p>PS：一般情况下默认的登录信息为admin/admin123，不过有的时候会提示密码错误，这个时候就需要找一下/opt/sonatype-worknexus3目录下的admin.password文件，使用该密码登陆后会提示用户设置admin密码。</p>
-<p>两种部署方案均做过尝试后，决定采用方案一中作为公司使用方案<br>1、nexus在使用中需要频繁读写，docker自身存在io低的短板，会降低nexus的效率<br>2、docker存在不稳定的短板，nexus作为公共工具，一旦出现问题将严重阻塞公司开发进度<br>3、nexus为工作目录和数据目录分离的架构设计，使用二进制部署可以轻松进行服务升级以及服务扩展（需要扩展备机时，将数据打包即可）</p>
-<p>五、nexus配置<br>5.1 配置数据仓库<br>登录nexus后，可以按照如下顺序点击，即可创建私服仓库了<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus1.jpg" alt><br>可以看到支持的存储种类是非常多的<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus2.jpg" alt><br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus3.jpg" alt></p>
-<p>仓库类型主要分为</p>
-<p>proxy：代理公网上的仓库，比如maven的中央仓库，node的阿里镜像</p>
-<p>hosted：本地仓库，一般是私有仓库，用于发布自己公司开发的制品</p>
-<p>group：组，把几个仓库结合在一起，方便下载制品<br>5.1.1 创建proxy代理仓库<br>1、选择npm（proxy）<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus4.jpg" alt></p>
-<p>2、命名并输入代理地址，保存<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus5.jpg" alt></p>
-<p>3、本地配置npm config或npm install时指定为私服代理<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus6.jpg" alt></p>
-<p>4、安装成功后产看代理仓库，发现已经缓存下来刚刚安装的node依赖了<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus7.jpg" alt></p>
-<p>5.1.2 创建hosted仓库<br>创建maven（hosted）</p>
-<p>选择maven2（hosted）仓库<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus8.jpg" alt></p>
-<p>配置仓库名，仓库中可保存包的version规则，上传规则后保存。<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus9.jpg" alt><br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus10.jpg" alt><br>其中vesion规则里面，release为发布版，snapshot为快照版，mixed为混合，建议release和snapshot分开保存，同时严格遵守版本规则。其中发布版release突出其稳定性，所以禁止redeploy，如果包变更，请升级版本号。</p>
-<p>配置完毕的仓库（私服）<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus11.jpg" alt><br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus12.jpg" alt></p>
-<p>PS:上传jar包</p>
-<p>方案一：有项目源码时，通过maven命令，打包源码后上传，在构建时，可在settings.xml中配置Repository标签和server标签，然后通过mvn deploy命令上传到对应私服仓库。</p>
-<p>方案二：通过调用接口上传</p>
-<p>POST /service/rest/v1/components</p>
-<p>curl -v -u admin:admin123 -X POST ‘<a href="http://192.168.1.62:8081/repository/example_maven_release/&#39;" target="_blank" rel="noopener">http://192.168.1.62:8081/repository/example_maven_release/&#39;</a> -F maven2.groupId=com.google.guava -F maven2.artifactId=guava -F maven2.version=24.0-jre -F maven2.asset1=@guava-24.0-jre.jar -F maven2.asset1.extension=jar -F maven2.asset2=@guava-24.0-jre-sources.jar -F maven2.asset2.classifier=sources -F maven2.asset2.extension=jar</p>
-<p>方案三：在只有j制品时，通过maven命令直接上传</p>
-<p>mvn deploy:deploy-file -Dfile=guava-24.0-jre.jar -DpomFile=guava-24.0-jre.pom -Dpackaging=jar -DrepositoryId=bxbank_privrepository_snapshots -Durl=<a href="http://192.168.1.62:8081/repository/example_maven_release/" target="_blank" rel="noopener">http://192.168.1.62:8081/repository/example_maven_release/</a></p>
-<p>5.1.3 创建group</p>
-<p>创建npm（group）</p>
-<p>npm因自身有多个代理可选择，所以可以选择group的模式来实现配置后可从多个npm代理中下载依赖的目的</p>
-<p><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus13.jpg" alt></p>
-<p>配置组名及npm组中需要的代理及私服<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus14.jpg" alt></p>
-<p>配置完毕<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus15.jpg" alt></p>
-<p>PS:配置组（group）主要是为了方便用户拉取依赖</p>
-<p>5.2 用户配置<br>5.2.1 创建角色<br>按下图依次点击进入roles界面<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus16.jpg" alt></p>
-<p>根据仓库分别创建ReleaseUploader，SnapshotUploader，NpmUploader的角色<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus17.jpg" alt></p>
-<p><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus18.jpg" alt></p>
-<p>在创建权限时，可通过搜索功能缩小范围，如图搜索npm，在这里会发现根据创建的example_npm仓库，出现了对应的规则，例如nx-repository-admin-npm-example_npm-* ,需要将这些规则移动到右侧，再点击保存即可。同理可创建ReleaseUploader，<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus19.jpg" alt><br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus20.jpg" alt><br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus21.jpg" alt><br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus22.jpg" alt></p>
-<p>至此，角色创建完毕<br>5.2.2 创建账号<br>按照下图顺序进入users界面<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus23.jpg" alt></p>
-<p>点击create local user，依次输入用户名，email，密码等，并配置之前创建的角色<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus24.jpg" alt></p>
-<p>配置基本信息<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus25.jpg" alt></p>
-<p>配置角色并设计帐号状态为激活</p>
-<p>并以相同的方式创建ReleaseUploader和SnapshotUploader，至此，公共账号创建完毕，可依照此方案创建所需要的帐号。</p>
-<p>六、高可用方案</p>
-<p>nexus因其自身有pro，并且将HA配置在了pro版，所以只能走野路子了。网上可以找到的方案为rsync，不过这个方案服务器负载过高，不太实用，所以采用另一个方案了。</p>
-<p>个人设计的方案为全量备份，备机高速恢复服务策略：<br>1、每天定时全量备份（夜晚），全备保存三份即可<br>2、nexus访问通过域名访问<br>3、出现问题，通过备份数据重启服务即可<br>方案缺陷：<br>1、会缺失全备时间点到当前时间点的制品<br>2、服务恢复需要一定时间，无法做到无感知</p>
 
     
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nexus</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/devops工具//" class="article-tag-list-link color4">devops工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
 
 
           </div>
@@ -650,10 +276,10 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
+		isHome: false,
 		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
