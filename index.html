@@ -25,6 +25,8 @@
     <link rel="alternative" href="/atom.xml" title="Devops技术小站" type="application/atom+xml">
   
   
+    <link rel="icon" href="/favicon.ico">
+  
   
   <link rel="stylesheet" type="text/css" href="/./main.a5fda8.css">
   <style type="text/css">
@@ -288,6 +290,197 @@
 
 
   
+    <article id="post-go学习笔记day1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2020/03/15/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/" target="_blank">go学习笔记day1</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2020/03/15/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/" class="archive-article-date">
+        <time datetime="2020-03-15T13:09:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>云原生和devops越演越烈的今天，运维的要求越来越高了，为此特意决定开启go学习之路。此为学习笔记<br>第一天：go基础语法</p>
+<p>一、申明变量<br>1、声明变量<br>var a int //整型，保存整数数值<br>var b string //字符串类型<br>var c []float32 //32位浮点型<br>var d func() bool //布尔型的函数变量<br>var e struct{   // 声明一个结构体类型的变量<br>        x int   // 拥有一个整型x字段<br>}</p>
+<p>/* 除此之外还可以用一种懒汉型的变量申明方式<br>   用var 和括号 将一组变量放在一起<br> */</p>
+<p>var (<br>    a int<br>    b string<br>    c []float32<br>    d func() bool<br>    e struct{<br>        x int<br>    }<br>)</p>
+<p>变量在声明时，go语言自动会对变量对应的内存区域进行初始化操作，每个变量会初始化成其类型的默认值<br>int float ： 0<br>string ： 空<br>bool ： false<br>切片，函数，指针：nil<br>当然了，也可以在声明时赋值</p>
+<p>2、声明变量的标准格式<br>var 变量名 类型 = 表达式<br>例如：<br>初始财产为100<br>var gold int = 100</p>
+<p>3、短变量声明并初始化<br>var声明的精简写法<br>gold := 100</p>
+<p>注意！！！：当使用 := ，推导声明写法左侧必须是没有定义过的变量。在多个短变量声明和赋值中，至少有一个新声明出现在左值中，编译器便不会报错。</p>
+<p>4、多个变量同时赋值<br>变量交换<br>var a int = 100<br>var b int = 200<br>b,a = a,b<br>fmt.Println(a,b)</p>
+<p>5、匿名变量<br>多重赋值时，如果不需要在左值中接受变量，可使用匿名变量_<br>例如：<br>func GetWeight() (float32,float32) {<br>    return 90.51,86.72<br>}<br>a, _ := GetWeight()<br>_, b := GetWeight()<br>fmt.Println(a,b)</p>
+<p>代码输出<br>90.51 86.72</p>
+<p>二、数据类型<br>1、整型<br>按长度分为：int8、int16、int32、int64<br>无符号整型：uint8、uint16、uint32、uint64</p>
+<p>其中uint8 为byte型，uint16 对应c语言的short型，unit64对应c语言中的long型</p>
+<p>注意：在使用 int和uint时，要考虑在不同平台上的差异</p>
+<p>2、浮点型<br>Go语言支持两种浮点型：float32和float64，遵循IEEE754标准<br>float32的浮点数的最大范围为3.4e38 可用定义为常量： math.Maxfloat32<br>float64的浮点数的最大范围为1.8e308 可用定义为常量：math.Maxfloat64<br>打印浮点数时，可以使用fmt包配合动词”%f”<br>代码如下<br><img src="/2020/03/15/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/go01.png" alt><br>输出结果如下<br><img src="/2020/03/15/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/go02.png" alt></p>
+<p>3、bool型<br>Go语言中不允许强制转换为bool型</p>
+<p>4、字符串<br>字符串在go语言中以原生数据类型出现，为双引号中的内容<br>例如：<br>单行字符串<br>str := “Hello World”<br>ch := “中文”<br>多行字符串<br>const str = <code>line1
+line2
+line3</code><br>字符串中的每一个元素则称为字符，字符有以下两种：<br>1、unit8 也会是byte型，代表了ASCII码的一个字符<br>2、rune 也就是int32，代表一个UTF-8字符，常用于处理中文，日文等<br>可以通过fmt.Printf中的%T来输出类型<br>例如：<br>代码如下<br><img src="/2020/03/15/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/go03.png" alt><br>输出结果为<br><img src="/2020/03/15/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/go04.png" alt></p>
+<p>字符串这里会涉及到转义符如下</p>
+<p><img src="/2020/03/15/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/go05.png" alt></p>
+<p>三、指针<br>指针地址：每个变量在运行时都有一个地址，这个地址代表变量在内存中的位置。Go语言中使用&amp;操作符放在变量前面对变量进行取地址操作。<br>例：<br>ptr := &amp;v        // v的类型为T</p>
+<p>v表示被取地址的变量，被取地址的v使用ptr进行接收，ptr的类型为<em>T，称作T的指针类型，</em>代表指针<br>指针使用代码案例如下：</p>
+<p>package main</p>
+<p>import “fmt”</p>
+<p>func main() {<br>    var cat int = 1            //声明整型变量cat<br>    var str string = “applt”    //声明字符串变量str<br>    fmt.Printf(“%p %p”, &amp;cat, &amp;str)    //%p输出指针<br>}</p>
+<p>执行结果为<br>0xc00006e090 0xc0000561e0    //0x为16进制前缀，输出结果每次均不会相同，代表变量运行时的地址</p>
+<p>package main</p>
+<p>import “fmt”</p>
+<p>func main () {<br>    //声明字符串<br>    var flower = “腰花”</p>
+<pre><code>//对字符串取地址
+ptr := &amp;flower
+
+//打印ptr指针类型
+fmt.Printf(&quot;type: %T\n&quot;, ptr)
+
+//打印ptr指针地址
+fmt.Printf(&quot;address: %p\n&quot;, ptr)
+
+//对指针取值
+value := *ptr
+
+//取值后的类型
+fmt.Printf(&quot;type: %T\n&quot;, value)
+
+//指针取值后就是指向变量的值
+fmt.Printf(&quot;value: %s\n&quot;, value)</code></pre><p>}<br>执行结果如下<br>type: *string<br>address: 0xc0000421f0<br>type: string<br>value: 腰花</p>
+<p>取地址操作符&amp;和取值操作符<em>是一对互补的操作符，&amp;取地址，</em>根据地址取出地址指向的值</p>
+<p>变量、指针地址、指针变量、取地址、取值的相互关系和特性</p>
+<p>a、对变量进行取地址&amp;操作，可以获取这个指针变量指向的原变量的值<br>b、指针变量的值是指针地址<br>c、对指针变量进行取值*操作，可以获得指针变量指向的原变量的值</p>
+<p>使用指针进行数值交换来修改值<br>代码如下<br>package main</p>
+<p>import “fmt”</p>
+<p>//交换函数<br>func swap(a,b <em>int) {    //</em>int，指针类型<br>    //取a指针的值<br>    t := *a</p>
+<pre><code>//取b指针的值
+*a = *b
+
+//将a指针的值赋给b指针指向的变量
+*b = t</code></pre><p>}</p>
+<p>func main() {<br>    //变量赋值3 4<br>    x,y := 3,4</p>
+<pre><code>//交换变量
+swap(&amp;x, &amp;y)
+
+//输出变量
+fmt.Println(x,y)</code></pre><p>}<br>输出结果为<br>4 3</p>
+<p>*操作符的根本意义就是操作指针指向的变量，当操作在右值时，就是取指向变量的值，当操作在左值时，就是将值设置给指向的变量。</p>
+<p>四、栈<br>栈（stack）：一种拥有特殊规则的线性表数据结构，只允许往代表线性表的一端放入数据，之后在这一端取出数据，按照后进先出的顺序（LIFO,LAST IN FIRST OUT）<br>往栈中放入数据叫做入栈，增加栈的元素数量，最后放入的元素总是位于栈的顶部，最先放入的数据总是位于栈的底部。不允许从栈底获取数据，也不允许对栈的成员进行任何查看和修改。</p>
+<p>变量和栈的关系：栈可以用于内存分配，栈的分配和回收速度非常快。<br>下面代码可以用来展示栈在内存分配上的作用<br>package main</p>
+<p>import (<br>    “fmt”<br>)</p>
+<p>func calc(a,b int) int {<br>var c int<br>c = a * b<br>var x int<br>x = c * 10<br>return x<br>}</p>
+<p>func main() {<br>    var y int = calc(3,4)<br>    fmt.Printf(“%d”, y)<br>}</p>
+<p>堆和栈相笔，堆适合不可预知大小的内存分配，但是速度较慢，并且会形成内存碎片</p>
+<p>堆（heap）<br>二、变量逃逸（Escape Analysis）<br>go语言的编译器中有变量逃逸分析，由编译器分析代码的特征和代码生命周期，决定应该如何堆还是栈进行内存分配。<br>1、逃逸分析<br>package main</p>
+<p>import “fmt”</p>
+<p>//本函数测试入口参数和返回值情况<br>func dummy(b int) int {</p>
+<pre><code>//声明一个c赋值进入参数并返回
+var c int
+c = b
+return c</code></pre><p>}</p>
+<p>//空函数，什么都不做<br>func void() {</p>
+<p>}</p>
+<p>func main() {</p>
+<pre><code>//声明a变量并打印
+var a int
+
+//调用void()函数
+void()
+
+//打印a变量的值和dummy()函数返回
+fmt.Printfln(a, dummy(0))</code></pre><p>}<br>执行命令行<br>go run –gcflags “-m -l” study3.go<br>D:\GO\golang\src\awesomeProject\studyday1&gt;go run –gcflags “-m -l” study3.go</p>
+<h1 id="command-line-arguments"><a href="#command-line-arguments" class="headerlink" title="command-line-arguments"></a>command-line-arguments</h1><p>.\study3.go:28:13: main … argument does not escape    //默认提示<br>.\study3.go:28:13: a escapes to heap        //第28行a 逃逸到堆<br>.\study3.go:28:22: dummy(0) escapes to heap    //dummy逃逸到堆<br>0 0</p>
+<p>2、取地址发生逃逸<br>代码如下</p>
+<p>package main</p>
+<p>import “fmt”</p>
+<p>//声明空结构体测试结构体逃逸情况<br>type Data struct {</p>
+<p>}</p>
+<p>func dummy() *Data {</p>
+<pre><code>//实体化c为Data类型
+var c Data
+
+//返回函数局部变量地址
+return &amp;c</code></pre><p>}</p>
+<p>func main() {</p>
+<pre><code>fmt.Println(dummy())</code></pre><p>}</p>
+<p>D:\GO\golang\src\awesomeProject\studyday1&gt;go run –gcflags “-m -l” study3.go</p>
+<h1 id="command-line-arguments-1"><a href="#command-line-arguments-1" class="headerlink" title="command-line-arguments"></a>command-line-arguments</h1><p>.\study3.go:13:6: moved to heap: c        //将c移动到堆中<br>.\study3.go:21:13: main … argument does not escape<br>.\study3.go:21:19: dummy() escapes to heap<br>&amp;{}</p>
+<p>堆和栈的原则：<br>变量是否被取地址<br>变量是否发生逃逸</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">go</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2020/03/15/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-dockerfile那点事儿" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -321,7 +514,7 @@
 <p>　　第二种镜像构建的方法则为dockerfile，通过dockerfile来控制镜像的构建。这个也是官方推荐的方案，同时毕业也推崇此方案。</p>
 <p>　　dockerfile为一个纯文本文件，通过指令来控制构建，常用指令如下：</p>
 <p>　　1.FROM 此指令后面跟随的为基础镜像。例如:FROM centos:7 引用基础镜像centos:7</p>
-<p>　　2.MAINTAINER 此指令用于维护构建者信息。例如:MAINTAINER XuPangzi <a href="mailto:&#80;&#x61;&#x6e;&#103;&#122;&#x69;&#x40;&#101;&#120;&#97;&#109;&#x70;&#108;&#101;&#46;&#99;&#x6f;&#109;">&#80;&#x61;&#x6e;&#103;&#122;&#x69;&#x40;&#101;&#120;&#97;&#109;&#x70;&#108;&#101;&#46;&#99;&#x6f;&#109;</a></p>
+<p>　　2.MAINTAINER 此指令用于维护构建者信息。例如:MAINTAINER XuPangzi <a href="mailto:&#80;&#x61;&#x6e;&#103;&#122;&#x69;&#x40;&#101;&#120;&#x61;&#109;&#112;&#x6c;&#x65;&#x2e;&#x63;&#x6f;&#109;">&#80;&#x61;&#x6e;&#103;&#122;&#x69;&#x40;&#101;&#120;&#x61;&#109;&#112;&#x6c;&#x65;&#x2e;&#x63;&#x6f;&#109;</a></p>
 <p>　　3.LABEL 用于添加标签。例如:LABEL BASE FOR SPRING-CLOUD</p>
 <p>　　4.COPY 用于拷贝文件，不解压。例如:COPY tomcat.tar  /opt/</p>
 <p>　　5.ADD 用户拷贝文件，可解压。例如:ADD tomcat.tar /opt/</p>
@@ -744,6 +937,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
               </li>
             
             <div class="clearfix"></div>
