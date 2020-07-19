@@ -6,17 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | Devops技术小站</title>
+  <title>go学习笔记day2 | Devops技术小站</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Devops技术小站">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="一、go语言中包的使用1、包（package）go语言的入口main函数所在的包，main包想引用别的代码，需要import。如下图所示这里导入了两个工程内自定义的包，util和utiltime，并且在主函数main中调用了自定义包中的函数下面看一下两个自定义包在工程study目录下创建了util目录，在util目录下的go文件会默认生成一个package在util目录下又创建了utiltime目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go学习笔记day2">
+<meta property="og:url" content="http://yoursite.com/2020/03/17/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/index.html">
 <meta property="og:site_name" content="Devops技术小站">
+<meta property="og:description" content="一、go语言中包的使用1、包（package）go语言的入口main函数所在的包，main包想引用别的代码，需要import。如下图所示这里导入了两个工程内自定义的包，util和utiltime，并且在主函数main中调用了自定义包中的函数下面看一下两个自定义包在工程study目录下创建了util目录，在util目录下的go文件会默认生成一个package在util目录下又创建了utiltime目">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/03/17/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go03.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/17/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go01.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/17/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go02.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/17/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go04.png">
+<meta property="article:published_time" content="2020-03-17T13:09:31.000Z">
+<meta property="article:modified_time" content="2020-07-19T10:16:48.740Z">
 <meta property="article:author" content="Devops旭">
+<meta property="article:tag" content="go">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/17/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go03.png">
   
     <link rel="alternative" href="/atom.xml" title="Devops技术小站" type="application/atom+xml">
   
@@ -169,95 +179,118 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-go学习笔记day2" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/04/14/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/" class="archive-article-date">
-        <time datetime="2020-04-14T07:14:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-14</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/04/14/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/" target="_blank">记一次nexus事故</a>
   
+    <h1 class="article-title" itemprop="name">
+      go学习笔记day2
     </h1>
   
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nexus</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/devops工具//" class="article-tag-list-link color4">devops工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
 <a href="/2020/03/17/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/" class="archive-article-date">
         <time datetime="2020-03-17T13:09:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-17</time>
 </a>
 
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">575字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">2分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>一、go语言中包的使用<br>1、包（package）<br>go语言的入口main函数所在的包，main包想引用别的代码，需要import。<br>如下图所示<br><img src="/2020/03/17/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go03.png" alt><br>这里导入了两个工程内自定义的包，util和utiltime，并且在主函数main中调用了自定义包中的函数<br>下面看一下两个自定义包<br><img src="/2020/03/17/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go01.png" alt><br>在工程study目录下创建了util目录，在util目录下的go文件会默认生成一个package<br><img src="/2020/03/17/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go02.png" alt><br>在util目录下又创建了utiltime目录（嵌套结构）</p>
+<p>再返回看main函数，所引包中的函数首字母为大写的，才可以在其他包中或者函数中引用，若为小写仅可在本包中引用</p>
+<p>总结一：关于包的使用<br>a、一个目录下的文件统一归属一个包，package的声明要一致<br>b、package声明可以和目录不一致，但同一目录下的声明必须一致<br>c、包可以使用嵌套结构<br>d、同包下的函数不需要导入包<br>e、main包为main函数所在的包<br>f、导入包的时候要从src目录写起，或是使用相对目录<br>g、导入包可以配置别名</p>
+<p>2、init()包初始化<br>a、init()函数会优先于main()函数执行，初始化数据<br>b、定义时不能有任何返回值和参数，这一点和main函数是一样的init函数可以存在于任意包中，可以定义多个<br>c、init函数可以存在于任意包中，可以定义多个<br>d、同一个go文件中，从上到下调用，同一个package中，按文件名字符串从小到大排序，不同的package中，若不互相依赖，则按照main包中import顺序，若存在依赖关系，则最后被依赖的最先被初始化。<br>e、存在依赖的包之间，不能循环导入<br>f、一个包可以被多次import，但只能初始化一次<br>g、值初始化某个包中的init()函数，单不执行其他内容，可以在导入包时加下划线，example import _ “utils”</p>
+<p>3、管理外部包<br>a、clone下来外部包，copy到gopath的src目录下（纯内网）<br>b、go get ${path}  go get github.com/go-sql-driver/mysql</p>
+<p>二、工程目录结构<br>GOPATH是go的开发目录，目录结构如下<br><img src="/2020/03/17/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/go04.png" alt></p>
+
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  
+                </div>
+              </span>
+            </span>
+          </span>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/03/17/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day2/" target="_blank">go学习笔记day2</a>
-  
-    </h1>
-  
+      </a>
+    </div>
+    
 
-
-        <div class="article-info info-on-right">
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          Devops旭
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="http://yoursite.com/2020/03/17/go学习笔记day2/" title="go学习笔记day2" target="_blank">http://yoursite.com/2020/03/17/go学习笔记day2/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -269,180 +302,64 @@
 		</ul>
 	</div>
 
-          
+    
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/03/15/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/" class="archive-article-date">
-        <time datetime="2020-03-15T13:09:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-15</time>
-</a>
 
+
+<nav id="article-nav">
+  
+    <a href="/2020/04/14/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          记一次nexus事故
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/03/15/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">go学习笔记day1</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/03/15/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/" target="_blank">go学习笔记day1</a>
-  
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">go</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/08/11/dockerfile%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF/" class="archive-article-date">
-        <time datetime="2019-08-11T07:32:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-11</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2019/08/11/dockerfile%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF/" target="_blank">dockerfile那点事儿</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/devops工具//" class="article-tag-list-link color4">devops工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/" class="archive-article-date">
-        <time datetime="2019-08-06T01:17:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-06</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/" target="_blank">SonatypeNexus你需要知道的那些事儿</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nexus</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/devops工具//" class="article-tag-list-link color4">devops工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-    
+
 
 
           </div>
@@ -483,8 +400,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
