@@ -6,22 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>dockerfile那点事儿 | Devops技术小站</title>
+  <title>120天的奇迹--凤凰项目 | Devops技术小站</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="docker容器的制作方式主要为两种，第一种为从容器构建镜像，即容器镜像，通过docker commit 的方式进行构建，该方法本菜鸟并不推荐，原因有如下几点：1）镜像为分层结构，容器则为镜像顶层加了一个可写层，这一方式构建的镜像极容易镜像过大。2）容器镜像无法确定这一层可写层内的内容，对于安全性上，存在问题，而且也不易维护。 　　第二种镜像构建的方法则为dockerfile，通过docker">
+  <meta name="description" content="凤凰项目真的是一本伟大的书，梳理记录了一位IT运维的传奇故事。快速通读感想本书的是主人公比尔•帕尔默，面对一个管理混乱的IT部门，通过借鉴工厂管理方法，在埃瑞克的引导下，发现了IT的“四种工作”以及“三种工作方法”。同时创造性的建立了可视化工作流这一方案。实现了一天十次部署这一不可能完成的任务，最终帮助公司走出了困境。那么，比尔的困难有哪些呢？我简单的数了一下：1、部门间的沟通配合存在巨大的鸿沟，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="dockerfile那点事儿">
-<meta property="og:url" content="http://yoursite.com/2019/08/11/dockerfile%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF/index.html">
+<meta property="og:title" content="120天的奇迹--凤凰项目">
+<meta property="og:url" content="http://yoursite.com/2020/07/21/120%E5%A4%A9%E7%9A%84%E5%A5%87%E8%BF%B9-%E5%87%A4%E5%87%B0%E9%A1%B9%E7%9B%AE/index.html">
 <meta property="og:site_name" content="Devops技术小站">
-<meta property="og:description" content="docker容器的制作方式主要为两种，第一种为从容器构建镜像，即容器镜像，通过docker commit 的方式进行构建，该方法本菜鸟并不推荐，原因有如下几点：1）镜像为分层结构，容器则为镜像顶层加了一个可写层，这一方式构建的镜像极容易镜像过大。2）容器镜像无法确定这一层可写层内的内容，对于安全性上，存在问题，而且也不易维护。 　　第二种镜像构建的方法则为dockerfile，通过docker">
+<meta property="og:description" content="凤凰项目真的是一本伟大的书，梳理记录了一位IT运维的传奇故事。快速通读感想本书的是主人公比尔•帕尔默，面对一个管理混乱的IT部门，通过借鉴工厂管理方法，在埃瑞克的引导下，发现了IT的“四种工作”以及“三种工作方法”。同时创造性的建立了可视化工作流这一方案。实现了一天十次部署这一不可能完成的任务，最终帮助公司走出了困境。那么，比尔的困难有哪些呢？我简单的数了一下：1、部门间的沟通配合存在巨大的鸿沟，">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2019-08-11T07:32:18.000Z">
-<meta property="article:modified_time" content="2020-07-14T07:33:59.704Z">
+<meta property="og:image" content="http://yoursite.com/2020/07/21/120%E5%A4%A9%E7%9A%84%E5%A5%87%E8%BF%B9-%E5%87%A4%E5%87%B0%E9%A1%B9%E7%9B%AE/1.png">
+<meta property="article:published_time" content="2020-07-21T02:38:54.000Z">
+<meta property="article:modified_time" content="2020-07-21T06:48:01.700Z">
 <meta property="article:author" content="Devops旭">
-<meta property="article:tag" content="docker">
+<meta property="article:tag" content="devops">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/21/120%E5%A4%A9%E7%9A%84%E5%A5%87%E8%BF%B9-%E5%87%A4%E5%87%B0%E9%A1%B9%E7%9B%AE/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Devops技术小站" type="application/atom+xml">
   
@@ -174,14 +176,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-dockerfile那点事儿" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-120天的奇迹-凤凰项目" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      dockerfile那点事儿
+      120天的奇迹--凤凰项目
     </h1>
   
 
@@ -193,8 +195,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2019/08/11/dockerfile%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF/" class="archive-article-date">
-        <time datetime="2019-08-11T07:32:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-11</time>
+<a href="/2020/07/21/120%E5%A4%A9%E7%9A%84%E5%A5%87%E8%BF%B9-%E5%87%A4%E5%87%B0%E9%A1%B9%E7%9B%AE/" class="archive-article-date">
+        <time datetime="2020-07-21T02:38:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-21</time>
 </a>
 
   
@@ -207,7 +209,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.3k字</span>
+      <span class="post-count">619字</span>
     </span>
   </span>
 
@@ -216,7 +218,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">5分</span>
+      <span class="post-count">2分</span>
     </span>
   </span>
 </div>
@@ -227,53 +229,10 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>　　docker容器的制作方式主要为两种，第一种为从容器构建镜像，即容器镜像，通过docker commit 的方式进行构建，该方法本菜鸟并不推荐，原因有如下几点：1）镜像为分层结构，容器则为镜像顶层加了一个可写层，这一方式构建的镜像极容易镜像过大。2）容器镜像无法确定这一层可写层内的内容，对于安全性上，存在问题，而且也不易维护。</p>
-<p>　　第二种镜像构建的方法则为dockerfile，通过dockerfile来控制镜像的构建。这个也是官方推荐的方案，同时毕业也推崇此方案。</p>
-<p>　　dockerfile为一个纯文本文件，通过指令来控制构建，常用指令如下：</p>
-<p>　　1.FROM 此指令后面跟随的为基础镜像。例如:FROM centos:7 引用基础镜像centos:7</p>
-<p>　　2.MAINTAINER 此指令用于维护构建者信息。例如:MAINTAINER XuPangzi <a href="mailto:&#80;&#x61;&#110;&#103;&#x7a;&#x69;&#64;&#x65;&#x78;&#x61;&#109;&#x70;&#x6c;&#101;&#46;&#x63;&#x6f;&#x6d;">&#80;&#x61;&#110;&#103;&#x7a;&#x69;&#64;&#x65;&#x78;&#x61;&#109;&#x70;&#x6c;&#101;&#46;&#x63;&#x6f;&#x6d;</a></p>
-<p>　　3.LABEL 用于添加标签。例如:LABEL BASE FOR SPRING-CLOUD</p>
-<p>　　4.COPY 用于拷贝文件，不解压。例如:COPY tomcat.tar  /opt/</p>
-<p>　　5.ADD 用户拷贝文件，可解压。例如:ADD tomcat.tar /opt/</p>
-<p>　　6.RUN 用于执行shell命令。例如:RUN  mkdir -p /app/{log,data,conf,lib}</p>
-<p>　　7.WORKDIR 用于设置工作目录，即进入容器后的默认目录。例如:WORKDIR /app</p>
-<p>　　8.USER 为运行shell命令的用户。例如:USER app</p>
-<p>　　　　　　　　　　　　　　　　　　　USER app:app</p>
-<p>　　　　　　　　　　　　　　　　　　　USER 500</p>
-<p>　　　　　　　　　　　　　　　　　　　USER 500:500</p>
-<p>　　　　　　　　　　　　　　　　　　　USER app:500</p>
-<p>　　　　　　　　　　　　　　　　　　　USER 500:app</p>
-<p>　　9.EXPOSE 声明端口。例如:EXPOSE 8881</p>
-<p>　　10.ENV 环境变量。例如:ENV MYSQL_PORT 8306</p>
-<p>　　11.ENTRYPOINT 容器启动时执行的命令，不会被docker run 覆盖。例如:ENTRYPOINT [“/bin/bash”,”-C”,”/opt/apache-tomcat/start.sh”]  exec 风格  ENTRYPOINT /bin/bash  -C /opt/apache-tomcat/start.sh shell风格</p>
-<p>　　12.CMD 容器启动时执行的shell命令</p>
-<p>　　谈完dockerfile，该谈一下构建镜像了。通常都是采用 docker build -t example:v1 . 在dockerfile所在目录执行即可，同时ADD和COPY的文件也需要在dockerfile同级，不过为了匹配流水线作业，通常会采用另外一种方式进行构建:</p>
-<p>　　1.用户自备dockerfile 同时dockerfile以应用来命名，例如APP1_dockerfile，在构建镜像时，执行命令 docker build –no-cache=true -t app_A:v1 -f APP1_dockerfile .</p>
-<p>　　2.将dockerfile植入到构建脚本中，通过构建是引入的参数来生成dockerfile 同时构建镜像，此方式下仍建议采用命令docker build –no-cache=true -t app_A:v1 -f APP1_dockerfile .</p>
-<p>　　</p>
-<p>　　实践：</p>
-<p>　　1.镜像最好是自己构建，从dockerhub或其他平台pull的私人镜像，无法保证是否里面埋有不安全插件，为了保障安全，推荐自己构建镜像</p>
-<p>　　2.选择恰当的基础镜像，核心应用，选择较大且稳定的镜像，比如centos，ubuntu，但该镜像的缺点是容易使生成的业务镜像较大，比如centos7+java8+tomcat+应用，轻松过G，若是前端等，则可以使用小巧的基础镜像，比如alpine，busybox，debian等，但该镜像也有不足，镜像追求轻量级，很多基础工具都没有，需要用户自行安装。</p>
-<p>　　3.构建镜像时要保证层数尽可能的少，此处有一技巧，RUN 后面可跟随多条shell命令，以&amp;链接，同时执行完后一定要记得删除无用文件，以保障镜像最小化。</p>
-<p>　　所以基于以上几点，可根据公司需求，构建几版基础镜像，比如1、alpine+nginx+lua+curl+telnet等网络调试工具的前端基础镜像。2、alpine+java+tomcat+curl+telnet等调试工具的java基础镜像。3、基于centos和Ubuntu的核心服务镜像。等等等等，将基础镜像构建好后，就可以根据基础镜像设计持续集成流水线来自动化构建业务镜像了。</p>
-<p>　　继续聊聊基础镜像</p>
-<p>　　1、busybox</p>
-<p>　　此镜像集成了上百个linux常用命令，且镜像极小，大约2M，通过docker pull busybox:latest 即可，这个通常用来进行测试，比如写个yaml啥的</p>
-<p>　　2、alpine</p>
-<p>　　此镜像为一个轻量级安全向镜像，大小仅5M，关注安全，性能，资源效能，通过docker pull alpine可拉取镜像。鉴于我很多镜像都基于此镜像，这里多叨叨几句。此镜像采用apk安装应用，可在dockerfile</p>
-<p>中添加源</p>
-<p>　　中科大源：echo “<a href="http://mirrors.ustc.edu.cn/alpine/&quot;" target="_blank" rel="noopener">http://mirrors.ustc.edu.cn/alpine/&quot;</a> &gt; /etc/apk/repositories</p>
-<p>　　阿里源：echo “<a href="http://mirrors.aliyun.com/alpine/&quot;" target="_blank" rel="noopener">http://mirrors.aliyun.com/alpine/&quot;</a> &gt; /etc/apk/repositories</p>
-<p>　　清华源：echo “<a href="https://mirror.tuna.tsinghua.edu.cn/alpine/&quot;" target="_blank" rel="noopener">https://mirror.tuna.tsinghua.edu.cn/alpine/&quot;</a> &gt; /etc/apk/repositories</p>
-<p>　　apk –update add –no-cache</p>
-<p>　　即可安装，不过记得在安装后删除缓存，使镜像保持最小</p>
-<p>　　3、ubuntu/centos</p>
-<p>　　这两个属于重量级的镜像，就放在一起说吧，比较稳定，不过就是容易搞的镜像超大，轻松过G，恐怖如斯，如果有需要jdk和tomcat来运行的java应用，请做好思想准备</p>
-<p>　　参考资料：</p>
-<p>　　1.你必须知道的Dockerfile  <a href="https://www.cnblogs.com/edisonchou/p/dockerfile_inside_introduction.html" target="_blank" rel="noopener">https://www.cnblogs.com/edisonchou/p/dockerfile_inside_introduction.html</a>   <a href="https://www.cnblogs.com/edisonchou/" target="_blank" rel="noopener">https://www.cnblogs.com/edisonchou/</a></p>
-<p>　　2. Dockerfile命令详解 <a href="https://www.cnblogs.com/yanh0606/p/11360936.html" target="_blank" rel="noopener">https://www.cnblogs.com/yanh0606/p/11360936.html</a></p>
-<p>　　3.Dockerfile 中的 COPY 与 ADD 命令 <a href="https://www.cnblogs.com/sparkdev/p/9573248.html" target="_blank" rel="noopener">https://www.cnblogs.com/sparkdev/p/9573248.html</a> <a href="http://www.cnblogs.com/sparkdev/" target="_blank" rel="noopener">http://www.cnblogs.com/sparkdev/</a></p>
-<p>　　4.容器技术之Dockerfile （一） <a href="https://www.cnblogs.com/qiuhom-1874/p/13019411.html" target="_blank" rel="noopener">https://www.cnblogs.com/qiuhom-1874/p/13019411.html</a>  <a href="https://www.cnblogs.com/qiuhom-1874/" target="_blank" rel="noopener">https://www.cnblogs.com/qiuhom-1874/</a> </p>
+    <p><img src="/2020/07/21/120%E5%A4%A9%E7%9A%84%E5%A5%87%E8%BF%B9-%E5%87%A4%E5%87%B0%E9%A1%B9%E7%9B%AE/1.png" alt><br>凤凰项目真的是一本伟大的书，梳理记录了一位IT运维的传奇故事。<br>快速通读感想<br>本书的是主人公比尔•帕尔默，面对一个管理混乱的IT部门，通过借鉴工厂管理方法，在埃瑞克的引导下，发现了IT的“四种工作”以及“三种工作方法”。同时创造性的建立了可视化工作流这一方案。实现了一天十次部署这一不可能完成的任务，最终帮助公司走出了困境。<br>那么，比尔的困难有哪些呢？我简单的数了一下：<br>1、部门间的沟通配合存在巨大的鸿沟，没有一条反馈回路。<br>2、变更没有一个合理的管理方法，没有风险评估、变更记录，变更规划及事件追踪。<br>3、没有认清楚自己的任务，无数的任务随意的插入进来。<br>4、工作未标准化，某个人变成了不可提代的角色<br>5、最关键的一点是，公司对于IT的不重视，甚至决定用外包来取代他们节约资金。</p>
+<p>那么针对这些问题，比尔又做了什么呢？<br>1、明确了每个人的任务：引导自己的同事为每一项任务列出一个清单，描述变更内容，风险，执行时间，并且统一审核。并且追踪每一个任务的进度，将工作进度可视化。<br>2、指定变更流程，任何未审批的变更一律禁止进行<br>3、IT部门合理规划任务，保持员工可以专注于一个工作，以提高工作效率（工时规划）。<br>4、标准化工作</p>
+<p>对此，比尔定义了四种工作：<br>1、业务项目工作<br>2、内部项目<br>3、变更<br>4、计划外工作（技术债带来的反工作）<br>同时明确了三种工作法<br>第一工作法：制止工作缺陷交接至下游工作中心，管理工作流，运用约束点来控制节奏，确认那些是重要工作。<br>第二工作法，建立反馈环路，一直往回通向产品定义，设计，开发的最初环节。<br>第三工作法：适当的施压，暴露问题，并根据问题将工作流程化，标准化。</p>
+<p>此书通过3天共5小时完成第一次通读。<br>准备第二遍精读，并记录感想。</p>
 
     
 
@@ -310,7 +269,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://yoursite.com/2019/08/11/dockerfile那点事儿/" title="dockerfile那点事儿" target="_blank">http://yoursite.com/2019/08/11/dockerfile那点事儿/</a>
+          <a href="http://yoursite.com/2020/07/21/120天的奇迹-凤凰项目/" title="120天的奇迹--凤凰项目" target="_blank">http://yoursite.com/2020/07/21/120天的奇迹-凤凰项目/</a>
         </li>
         
         <li>
@@ -332,24 +291,13 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">devops</a>
         		</li>
       		
 		</ul>
 	</div>
 
     
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/devops工具//" class="article-tag-list-link color4">devops工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
     
 
@@ -362,18 +310,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2020/03/15/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0day1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          go学习笔记day1
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">SonatypeNexus你需要知道的那些事儿</div>
+    <a href="/2020/04/14/%E8%AE%B0%E4%B8%80%E6%AC%A1nexus%E4%BA%8B%E6%95%85/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">记一次nexus事故</div>
       <i class="icon-circle-right"></i>
     </a>
   
