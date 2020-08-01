@@ -265,6 +265,191 @@
 
 
   
+    <article id="post-docker回顾（一）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2020/06/25/docker%E5%9B%9E%E9%A1%BE%EF%BC%88%E4%B8%80%EF%BC%89/" target="_blank">docker回顾（一）</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2020/06/25/docker%E5%9B%9E%E9%A1%BE%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
+        <time datetime="2020-06-25T03:28:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-25</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>一、为什么要用docker<br>大家都知道，传统的VM解决的核心问题是资源分配的问题，那么容器解决的问题是什么呢？是应用开发、测试和部署。<br>docker是用go语言开发的，基于linux内核的CGroup、Namespace以及AUFS类的UnionFS技术，实现对进程进行封装隔离带轻量级的虚拟化技术之一。通过共享内核，能够把应用需要的运行环境、缓存环境、数据库环境封装起来，实现快速发布，自动运维，自动扩容，微服务等大技术，让小公司玩转大技术不再是梦想。<br>二、docker的优势</p>
+<p>我们可以看一下docker官方宣称的几大作用吧。<br>1、实现代码端到端的发布流程，无缝的配置到各个测试环境之中，同时也可以迁移到任何环境之中，实现了底层和应用层的解耦。<br>2、容器级别的虚拟化可以实现资源的最大化应用，避免了系统级的资源浪费。<br>3、开发环境生产化，实现原生环境，最大限度模拟生产分布式部署的环境。<br>4、应用进程级的隔离，有利于微服务的解耦。<br>5、快速部署，秒级的应用启动速度，便于大规模集群的管理。</p>
+<p>三、快速部署一个docker环境<br>1、以centos7环境为例<br>1.1、鉴于centos7自带的3的内核存在一些bug导致docker运行的不稳定，可升级内核为4.4.X 以上即可<br>    rpm -Uvh <a href="http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm" target="_blank" rel="noopener">http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm</a><br>    yum –enablerepo=elrepo-kernel install -y kernel-lt<br>    设置开机从新内核启动<br>    grub2-set-default 0<br>1.2、设置yum源<br>    yum-config-manager –add-repo <a href="https://download.docker.com/linux/centos/docker-ce.repo" target="_blank" rel="noopener">https://download.docker.com/linux/centos/docker-ce.repo</a><br>    安装docker<br>    yum install docker-ce<br>1.3、优化docker<br>1.3.1、优化docker存储位置<br>    在/etc/docker/deamon.json中添加<br>    “data-root”: “/mnt/docker-lib”<br>1.3.2、优化国内镜像源<br>    在/etc/docker/deamon.json中添加<br>    “registry-mirrors”: [“<a href="https://registry.docker-cn.com&quot;]">https://registry.docker-cn.com&quot;]</a></p>
+<p>四、简单谈论一下docker<br>1、容器的本质是什么呢？<br>容器可以简单的看作是CGroup、Namespace、Rootfs的集合。<br>1.1、Namespace是linux提供的一种内核级别的隔离方法。到目前为止，一共提供了Mount Namespace，UTS Namespace，IPC Namespace，PID Namespace，Network Namespace，User Namespace，其中centos7需要升级到3.8以上的内核才可以使用所有的namespace，不过出于稳定性考虑，建议升级到4.4.X以上的内核。</p>
+<p>1.2.1、Cgroup是linux内核提供的一种资源控制的机制。细化的看，Cgroup提供了以下几个功能<br>    a、资源限制，Cgroup会对不同进程使用的资源进行限制，设定使用上限，一旦超过这个限制便会发出警告，比如OOM。<br>    b、优先级管理，Cgroup会对不同的进程分配CPU，IO资源。<br>    c、资源统计，Cgroup可以统计系统的资源使用情况。<br>    e、进程控制，对进程组进行挂起、恢复等操作。<br>    f、进程组隔离，比如：使用ns子系统可以使不同的进程组使用不同的namespace，以达到隔离的目的，不同的进程组有各自的进程、网络、文件系统挂载空间。<br>    所以从本质上来看，cgroup是内核附加在程序山的一系列钩子(hook)，通过事件触发钩子以达到对资源的限制和追踪。<br>1.3、Rootfs是容器启动时内部的文件系统，也就是docker容器的根目录。在启动docker容器时，会先为容器挂载Rootfs，并设定为只读模式，同时采用union mount技术，在Rootfs上挂载一个读写的空文件系统。<br>2、接下来谈谈docker的网络架构<br>众所周知，docker网络有四种模型，bridge，host，container，none<br>2.1、bridge<br>网络模型如下图<br><img src="/2020/06/25/docker%E5%9B%9E%E9%A1%BE%EF%BC%88%E4%B8%80%EF%BC%89/bridge.png" alt><br>docker会为容器创建独有的network namespace，也会为这个命名空间配置好虚拟网卡，路由，DNS，IP地址与iptables规则（也就是sandbox的内容）。<br>2.2、host模式<br><img src="/2020/06/25/docker%E5%9B%9E%E9%A1%BE%EF%BC%88%E4%B8%80%EF%BC%89/host.png" alt><br>在这个模式下，容器和宿主机共享一个network namespace，而不会单独获得单独的network namespace。这意味着，容器不会单独配置网卡，IP地址，而是用宿主机的，但是在这一模式下，容器内的很多操作很直接影响到宿主机，比如重启，所以这一模式并不是很推荐。<br>2.3、container模式，在这一模式下，docker将新建容器放到一个已知的容器网络栈中，这样会和已存在的容器共享IP和端口等网络资源，两者可通过lo回环接口进行通信。<br>2.4、none，不配置网络，这个需要用户自行配置网络。<br>3、那么docker的安全性呢<br>3.1、可以说，docker出现安全问题的主要原因在于容器和宿主机共享内核，因为namespace只提供了PID、Mount、Network、UTS、IPC、User这几个属性的隔离，其他资源会存在暴露的风险，假如出现宿主机资源滥用，有概率导致宿主机崩溃。其次，docker源，docker自身，DDos攻击，局域网攻击等也存在安全问题。那么应该如何应对呢？<br>3.2、docker安全措施<br>1&gt;及时更新内核，现在一般更新到4.4.X的就可以了，如果有新问题出现，再根据需求更新即可。<br>2&gt;检查Cgroup，对资源进行配额和限定，不过最新版的docker已经支持了通过docker命令行进行资源限制，可通过命令行配置即可，当然，直接修改cgroup进行限制也是可以的。<br>3&gt;严禁将宿主机上的敏感目录映射到容器，比如/etc目录<br>4&gt;仅运行必要的服务，禁止SSH服务<br>5&gt;对docker的守护进程，文件，目录进行审计，并限制root权限的docker文件访问权限为644甚至更低<br>6&gt;清理不必要的容器<br>7&gt;严禁使用host网络模式，严禁映射到特权端口<br>8&gt;创建本地镜像仓库，确保镜像，软件来源均可信，并采用安全扫描<br>9&gt;限制重启次数，避免频繁重启导致雪崩<br>10&gt;使用普通用户启动docker</p>
+<p>可以说docker是包罗万象的，本文只是先简单进行一下讨论，从下一篇文章开始，将论述我和docker更多的故事</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2020/06/25/docker%E5%9B%9E%E9%A1%BE%EF%BC%88%E4%B8%80%EF%BC%89/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-戏说jenkins" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2020/05/23/%E6%88%8F%E8%AF%B4jenkins/" target="_blank">戏说jenkins</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2020/05/23/%E6%88%8F%E8%AF%B4jenkins/" class="archive-article-date">
+        <time datetime="2020-05-23T10:01:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-23</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>一、为什么要用jenkins呢？<br>在当今的互联网环境下，devops大行其道，成为了一个热度越来越高的概念，而贯穿整个devops工作流的则是编码 → 提交 → 测试 → 部署 → 交付。而jenkins 是一个基于Java开发的一个开源的CICD工具，同时支持丰富的插件扩展，也可以开发适合自己团队使用的工具，如git，svn，maven，docker等。<br>那么CICD是什么呢？<br>持续集成（Continuous integration）指的是，频繁地（一天多次）将代码集成到主干。将软件个人研发的部分向软件整体部分交付，频繁进行集成以便更快地发现其中的错误。<br>持续交付（Continuous delivery）指的是，频繁地将软件的新版本，交付给质量团队或者用户，以供评审。如果评审通过，代码就进入生产阶段。<br>那么这样做有什么好处呢？<br>首先，可以保持代码是始终处于可发布到生产的状态，同时也可以快速发现定位问题。其次，可以防止分支大幅偏离主干。第三，持续测试及部署测试环境可以压缩部署生产前的等待时间，将整个流程自动化，为devops实现奠定基础。<br><img src="/2020/05/23/%E6%88%8F%E8%AF%B4jenkins/1.jpg" alt><br>笔者公司在devops评估中通过了三级，回顾整个devops架构，发现此架构无可移植性，故此决定对标此架构，进行进一步的探索，第一入手点决定放在devops工具中，至关重要的一节，jenkins。</p>
+<p>二、jenkins环境部署<br>2.1、环境配置<br>2C4G<br>JAVA8<br>TOMCAT8</p>
+<p>2.2、部署jenkins<br>2.2.1、部署JAVA8<br>这里选择使用openjdk<br>yum -y install java-1.8.0-openjdk*</p>
+<p>2.2.2、部署TOMCAT8<br>tar zvxf apache-tomcat-8.5.56.tar.gz<br>mv apache-tomcat-8.5.56 /opt</p>
+<p>2.2.3、部署jenkins<br>cd /opt/apache-tomcat-8/webapps/ROOT/<br>rm -rf *<br>cp ~/jenkins.war .<br>unzip jenkins.war</p>
+<p>2.2.4、启动jenkins<br>sh /opt/apache-tomcat-8/bin/start.sh<br>访问 <a href="http://IP:8080" target="_blank" rel="noopener">http://IP:8080</a><br>主要注意的是，这里会提示安装插件，一定要跳过</p>
+<p>2.2.5、修改/root/.jenkins/updates/default.json<br>sed -i ‘s/<a href="http://www.google.com/www.baidu.com/g&#39;" target="_blank" rel="noopener">www.google.com/www.baidu.com/g&#39;</a> default.json<br>sed -i ‘s/updates.jenkins-ci.org/download/mirrors.tuna.tsinghua.edu.cn/jenkins/g’ default.json<br>将下载源更换成清华源，在重启jenkins即可</p>
+<p>2.3、插件安装<br>安装一些用得到的就行，比如pipeline，比如gitlab相关的，这个很灵活，按需求来就行了</p>
+<p>2.4、提供一个国内的镜像，下载速度超级快<br><a href="https://mirrors.huaweicloud.com/jenkins/" target="_blank" rel="noopener">https://mirrors.huaweicloud.com/jenkins/</a></p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">jenkins</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2020/05/23/%E6%88%8F%E8%AF%B4jenkins/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-记一次nexus事故" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -824,7 +1009,7 @@ return &amp;c</code></pre><p>}</p>
 <p>　　第二种镜像构建的方法则为dockerfile，通过dockerfile来控制镜像的构建。这个也是官方推荐的方案，同时毕业也推崇此方案。</p>
 <p>　　dockerfile为一个纯文本文件，通过指令来控制构建，常用指令如下：</p>
 <p>　　1.FROM 此指令后面跟随的为基础镜像。例如:FROM centos:7 引用基础镜像centos:7</p>
-<p>　　2.MAINTAINER 此指令用于维护构建者信息。例如:MAINTAINER XuPangzi <a href="mailto:&#x50;&#x61;&#110;&#x67;&#x7a;&#x69;&#x40;&#101;&#x78;&#97;&#109;&#112;&#x6c;&#x65;&#46;&#x63;&#111;&#x6d;">&#x50;&#x61;&#110;&#x67;&#x7a;&#x69;&#x40;&#101;&#x78;&#97;&#109;&#112;&#x6c;&#x65;&#46;&#x63;&#111;&#x6d;</a></p>
+<p>　　2.MAINTAINER 此指令用于维护构建者信息。例如:MAINTAINER XuPangzi <a href="mailto:&#x50;&#x61;&#x6e;&#103;&#x7a;&#105;&#x40;&#101;&#x78;&#97;&#x6d;&#112;&#x6c;&#101;&#46;&#x63;&#x6f;&#x6d;">&#x50;&#x61;&#x6e;&#103;&#x7a;&#105;&#x40;&#101;&#x78;&#97;&#x6d;&#112;&#x6c;&#101;&#46;&#x63;&#x6f;&#x6d;</a></p>
 <p>　　3.LABEL 用于添加标签。例如:LABEL BASE FOR SPRING-CLOUD</p>
 <p>　　4.COPY 用于拷贝文件，不解压。例如:COPY tomcat.tar  /opt/</p>
 <p>　　5.ADD 用户拷贝文件，可解压。例如:ADD tomcat.tar /opt/</p>
@@ -1255,6 +1440,10 @@ return &amp;c</code></pre><p>}</p>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">go</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
               </li>
             
             <div class="clearfix"></div>

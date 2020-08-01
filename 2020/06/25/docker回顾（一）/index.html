@@ -6,48 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>SonatypeNexus你需要知道的那些事儿 | Devops技术小站</title>
+  <title>docker回顾（一） | Devops技术小站</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="一、背景公司计划做devops技术栈，在制品库选型时选择了SonatypeNexus作为制品管理工具。Sonatype nexus 是sonatype公司的一款制品管理工具，自身提供了OSS 开源免费版及PRO商业版，同时nexus自身具有多方面的优势，首先，管理制品种类多，可以管理maven，docker，npm，go等主流语言的制品，同时在权限配置和用户配置上具有的优势，可以实现针对制品的降权">
+  <meta name="description" content="一、为什么要用docker大家都知道，传统的VM解决的核心问题是资源分配的问题，那么容器解决的问题是什么呢？是应用开发、测试和部署。docker是用go语言开发的，基于linux内核的CGroup、Namespace以及AUFS类的UnionFS技术，实现对进程进行封装隔离带轻量级的虚拟化技术之一。通过共享内核，能够把应用需要的运行环境、缓存环境、数据库环境封装起来，实现快速发布，自动运维，自动扩">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SonatypeNexus你需要知道的那些事儿">
-<meta property="og:url" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/index.html">
+<meta property="og:title" content="docker回顾（一）">
+<meta property="og:url" content="http://yoursite.com/2020/06/25/docker%E5%9B%9E%E9%A1%BE%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="Devops技术小站">
-<meta property="og:description" content="一、背景公司计划做devops技术栈，在制品库选型时选择了SonatypeNexus作为制品管理工具。Sonatype nexus 是sonatype公司的一款制品管理工具，自身提供了OSS 开源免费版及PRO商业版，同时nexus自身具有多方面的优势，首先，管理制品种类多，可以管理maven，docker，npm，go等主流语言的制品，同时在权限配置和用户配置上具有的优势，可以实现针对制品的降权">
+<meta property="og:description" content="一、为什么要用docker大家都知道，传统的VM解决的核心问题是资源分配的问题，那么容器解决的问题是什么呢？是应用开发、测试和部署。docker是用go语言开发的，基于linux内核的CGroup、Namespace以及AUFS类的UnionFS技术，实现对进程进行封装隔离带轻量级的虚拟化技术之一。通过共享内核，能够把应用需要的运行环境、缓存环境、数据库环境封装起来，实现快速发布，自动运维，自动扩">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus1.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus2.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus3.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus4.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus5.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus6.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus7.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus8.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus9.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus10.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus11.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus12.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus13.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus14.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus15.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus16.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus17.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus18.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus19.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus20.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus21.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus22.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus23.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus24.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus25.jpg">
-<meta property="article:published_time" content="2019-08-06T01:17:17.000Z">
-<meta property="article:modified_time" content="2020-07-14T03:44:44.960Z">
+<meta property="og:image" content="http://yoursite.com/2020/06/25/docker%E5%9B%9E%E9%A1%BE%EF%BC%88%E4%B8%80%EF%BC%89/bridge.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/25/docker%E5%9B%9E%E9%A1%BE%EF%BC%88%E4%B8%80%EF%BC%89/host.png">
+<meta property="article:published_time" content="2020-06-25T03:28:44.000Z">
+<meta property="article:modified_time" content="2020-08-01T11:02:11.627Z">
 <meta property="article:author" content="Devops旭">
-<meta property="article:tag" content="nexus">
+<meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus1.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2020/06/25/docker%E5%9B%9E%E9%A1%BE%EF%BC%88%E4%B8%80%EF%BC%89/bridge.png">
   
     <link rel="alternative" href="/atom.xml" title="Devops技术小站" type="application/atom+xml">
   
@@ -200,14 +177,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-SonatypeNexus你需要知道的那些事儿" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-docker回顾（一）" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      SonatypeNexus你需要知道的那些事儿
+      docker回顾（一）
     </h1>
   
 
@@ -219,8 +196,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/" class="archive-article-date">
-        <time datetime="2019-08-06T01:17:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-06</time>
+<a href="/2020/06/25/docker%E5%9B%9E%E9%A1%BE%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
+        <time datetime="2020-06-25T03:28:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-25</time>
 </a>
 
   
@@ -233,7 +210,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.9k字</span>
+      <span class="post-count">1.6k字</span>
     </span>
   </span>
 
@@ -242,7 +219,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">7分</span>
+      <span class="post-count">6分</span>
     </span>
   </span>
 </div>
@@ -253,89 +230,12 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>一、背景<br>公司计划做devops技术栈，在制品库选型时选择了SonatypeNexus作为制品管理工具。Sonatype nexus 是sonatype公司的一款制品管理工具，自身提供了OSS 开源免费版及PRO商业版，同时nexus自身具有多方面的优势，首先，管理制品种类多，可以管理maven，docker，npm，go等主流语言的制品，同时在权限配置和用户配置上具有的优势，可以实现针对制品的降权处理。同时官方也提供了丰富的api文档，可以灵活的针对nexus进行二次开发，实现devops工具的多种需求。<br>二、工具下载<br>Nexus提供了二进制部署及镜像部署这两种方式，首先二进制部署可通过<a href="https://help.sonatype.com/repomanager3/download/download-archives---repository-manager-3" target="_blank" rel="noopener">https://help.sonatype.com/repomanager3/download/download-archives---repository-manager-3</a> 下载，镜像可通过<a href="https://hub.docker.com/r/sonatypenexus3/tags/" target="_blank" rel="noopener">https://hub.docker.com/r/sonatypenexus3/tags/</a> 进行下载。PS:1、站点在国外，所以二进制下载常常会出现下载失败的现象，这个可以可以通过反复下载赌运气，或者是买一个其他地区的服务器转发（成本好高呀）2、镜像下载就好多了，可以通过阿里云的加速器，下载速度还是让人可以接受的。</p>
-<p>三、服务部署<br>3.1 部署需求<br>官方建议配置如下<br>CPU:最少为4，推荐为8+<br>内存:建议8G起步，规模大可考虑16G甚至是32G+<br>JAVA:JDK8<br>句柄数:至少为65536<br>磁盘空间:多多益善，官方建议500G</p>
-<p>综合考虑我公司现状，nexus配置为<br>CPU：8核<br>内存：16G<br>存储：500G</p>
-<p>3.2 服务部署<br>部署这里共探索了两种主流方案，方案如下<br>方案一、二进制部署<br>1、 创建程序用户</p>
-<p>useradd nexus</p>
-<p>2、 修改句柄数</p>
-<p>在 /etc/security/limits.conf 中添加</p>
-<p>nexus - nofile 65536</p>
-<p>3、 重启服务</p>
-<p>reboot</p>
-<p>4、 部署java</p>
-<p>tar zvxf jdk-8u231-linux-x64.tar.gz</p>
-<p>mv jdk-8u231 /opt/jdk</p>
-<p>修改 /etc/profile</p>
-<p>export JAVA_HOME=/opt/jdk</p>
-<p>export PATH=$JAVA_HOME/bin:$PATH</p>
-<p>export CLASSPATH=.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$JAVA_HOME/lib/tools.jar</p>
-<p>保存后执行 source /etc/profile</p>
-<p>5、 部署nexus</p>
-<p>cd /opt</p>
-<p>wget <a href="http://download.sonatype.comnexus/3nexus-3.24.0-02-unix.tar.gz" target="_blank" rel="noopener">http://download.sonatype.comnexus/3nexus-3.24.0-02-unix.tar.gz</a></p>
-<p>tar zvxf nexus-3.24.0-02-unix.tar.gz</p>
-<p>mv nexus-3.24.0-02 nexus</p>
-<p>cd nexus/bin</p>
-<p>在nexus 中修改第14行</p>
-<h1 id="INSTALL4J-JAVA-HOME-OVERRIDE"><a href="#INSTALL4J-JAVA-HOME-OVERRIDE" class="headerlink" title="INSTALL4J_JAVA_HOME_OVERRIDE="></a>INSTALL4J_JAVA_HOME_OVERRIDE=</h1><p>为java的部署路径否则有概率启动报错</p>
-<p>在nexus.rc中修改为</p>
-<p>run_as_user=”nexus”</p>
-<p>在/optnexus/etcnexus-default.properties中可修改默认端口（可选）</p>
-<p>修改文件权限</p>
-<p>chown -R nexus:nexus /optnexus</p>
-<p>chown -R nexus:nexus /opt/sonatype-work</p>
-<p>切换用户，启动服务</p>
-<p>su nexus</p>
-<p>cd /optnexus/bin</p>
-<p>.nexus start</p>
-<p>方案二 容器部署<br>docker run \</p>
-<p>-p 8081:8081 \</p>
-<p>–name nexus \</p>
-<p>–ulimit nofile=65536:65536 \</p>
-<p>–restart always \</p>
-<p>sonatypenexus3</p>
-<p>即可完成部署</p>
-<p>PS：一般情况下默认的登录信息为admin/admin123，不过有的时候会提示密码错误，这个时候就需要找一下/opt/sonatype-worknexus3目录下的admin.password文件，使用该密码登陆后会提示用户设置admin密码。</p>
-<p>两种部署方案均做过尝试后，决定采用方案一中作为公司使用方案<br>1、nexus在使用中需要频繁读写，docker自身存在io低的短板，会降低nexus的效率<br>2、docker存在不稳定的短板，nexus作为公共工具，一旦出现问题将严重阻塞公司开发进度<br>3、nexus为工作目录和数据目录分离的架构设计，使用二进制部署可以轻松进行服务升级以及服务扩展（需要扩展备机时，将数据打包即可）</p>
-<p>五、nexus配置<br>5.1 配置数据仓库<br>登录nexus后，可以按照如下顺序点击，即可创建私服仓库了<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus1.jpg" alt><br>可以看到支持的存储种类是非常多的<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus2.jpg" alt><br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus3.jpg" alt></p>
-<p>仓库类型主要分为</p>
-<p>proxy：代理公网上的仓库，比如maven的中央仓库，node的阿里镜像</p>
-<p>hosted：本地仓库，一般是私有仓库，用于发布自己公司开发的制品</p>
-<p>group：组，把几个仓库结合在一起，方便下载制品<br>5.1.1 创建proxy代理仓库<br>1、选择npm（proxy）<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus4.jpg" alt></p>
-<p>2、命名并输入代理地址，保存<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus5.jpg" alt></p>
-<p>3、本地配置npm config或npm install时指定为私服代理<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus6.jpg" alt></p>
-<p>4、安装成功后产看代理仓库，发现已经缓存下来刚刚安装的node依赖了<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus7.jpg" alt></p>
-<p>5.1.2 创建hosted仓库<br>创建maven（hosted）</p>
-<p>选择maven2（hosted）仓库<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus8.jpg" alt></p>
-<p>配置仓库名，仓库中可保存包的version规则，上传规则后保存。<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus9.jpg" alt><br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus10.jpg" alt><br>其中vesion规则里面，release为发布版，snapshot为快照版，mixed为混合，建议release和snapshot分开保存，同时严格遵守版本规则。其中发布版release突出其稳定性，所以禁止redeploy，如果包变更，请升级版本号。</p>
-<p>配置完毕的仓库（私服）<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus11.jpg" alt><br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus12.jpg" alt></p>
-<p>PS:上传jar包</p>
-<p>方案一：有项目源码时，通过maven命令，打包源码后上传，在构建时，可在settings.xml中配置Repository标签和server标签，然后通过mvn deploy命令上传到对应私服仓库。</p>
-<p>方案二：通过调用接口上传</p>
-<p>POST /service/rest/v1/components</p>
-<p>curl -v -u admin:admin123 -X POST ‘<a href="http://192.168.1.62:8081/repository/example_maven_release/&#39;" target="_blank" rel="noopener">http://192.168.1.62:8081/repository/example_maven_release/&#39;</a> -F maven2.groupId=com.google.guava -F maven2.artifactId=guava -F maven2.version=24.0-jre -F maven2.asset1=@guava-24.0-jre.jar -F maven2.asset1.extension=jar -F maven2.asset2=@guava-24.0-jre-sources.jar -F maven2.asset2.classifier=sources -F maven2.asset2.extension=jar</p>
-<p>方案三：在只有j制品时，通过maven命令直接上传</p>
-<p>mvn deploy:deploy-file -Dfile=guava-24.0-jre.jar -DpomFile=guava-24.0-jre.pom -Dpackaging=jar -DrepositoryId=bxbank_privrepository_snapshots -Durl=<a href="http://192.168.1.62:8081/repository/example_maven_release/" target="_blank" rel="noopener">http://192.168.1.62:8081/repository/example_maven_release/</a></p>
-<p>5.1.3 创建group</p>
-<p>创建npm（group）</p>
-<p>npm因自身有多个代理可选择，所以可以选择group的模式来实现配置后可从多个npm代理中下载依赖的目的</p>
-<p><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus13.jpg" alt></p>
-<p>配置组名及npm组中需要的代理及私服<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus14.jpg" alt></p>
-<p>配置完毕<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus15.jpg" alt></p>
-<p>PS:配置组（group）主要是为了方便用户拉取依赖</p>
-<p>5.2 用户配置<br>5.2.1 创建角色<br>按下图依次点击进入roles界面<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus16.jpg" alt></p>
-<p>根据仓库分别创建ReleaseUploader，SnapshotUploader，NpmUploader的角色<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus17.jpg" alt></p>
-<p><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus18.jpg" alt></p>
-<p>在创建权限时，可通过搜索功能缩小范围，如图搜索npm，在这里会发现根据创建的example_npm仓库，出现了对应的规则，例如nx-repository-admin-npm-example_npm-* ,需要将这些规则移动到右侧，再点击保存即可。同理可创建ReleaseUploader，<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus19.jpg" alt><br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus20.jpg" alt><br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus21.jpg" alt><br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus22.jpg" alt></p>
-<p>至此，角色创建完毕<br>5.2.2 创建账号<br>按照下图顺序进入users界面<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus23.jpg" alt></p>
-<p>点击create local user，依次输入用户名，email，密码等，并配置之前创建的角色<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus24.jpg" alt></p>
-<p>配置基本信息<br><img src="/2019/08/06/SonatypeNexus%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/nexus25.jpg" alt></p>
-<p>配置角色并设计帐号状态为激活</p>
-<p>并以相同的方式创建ReleaseUploader和SnapshotUploader，至此，公共账号创建完毕，可依照此方案创建所需要的帐号。</p>
-<p>六、高可用方案</p>
-<p>nexus因其自身有pro，并且将HA配置在了pro版，所以只能走野路子了。网上可以找到的方案为rsync，不过这个方案服务器负载过高，不太实用，所以采用另一个方案了。</p>
-<p>个人设计的方案为全量备份，备机高速恢复服务策略：<br>1、每天定时全量备份（夜晚），全备保存三份即可<br>2、nexus访问通过域名访问<br>3、出现问题，通过备份数据重启服务即可<br>方案缺陷：<br>1、会缺失全备时间点到当前时间点的制品<br>2、服务恢复需要一定时间，无法做到无感知</p>
+    <p>一、为什么要用docker<br>大家都知道，传统的VM解决的核心问题是资源分配的问题，那么容器解决的问题是什么呢？是应用开发、测试和部署。<br>docker是用go语言开发的，基于linux内核的CGroup、Namespace以及AUFS类的UnionFS技术，实现对进程进行封装隔离带轻量级的虚拟化技术之一。通过共享内核，能够把应用需要的运行环境、缓存环境、数据库环境封装起来，实现快速发布，自动运维，自动扩容，微服务等大技术，让小公司玩转大技术不再是梦想。<br>二、docker的优势</p>
+<p>我们可以看一下docker官方宣称的几大作用吧。<br>1、实现代码端到端的发布流程，无缝的配置到各个测试环境之中，同时也可以迁移到任何环境之中，实现了底层和应用层的解耦。<br>2、容器级别的虚拟化可以实现资源的最大化应用，避免了系统级的资源浪费。<br>3、开发环境生产化，实现原生环境，最大限度模拟生产分布式部署的环境。<br>4、应用进程级的隔离，有利于微服务的解耦。<br>5、快速部署，秒级的应用启动速度，便于大规模集群的管理。</p>
+<p>三、快速部署一个docker环境<br>1、以centos7环境为例<br>1.1、鉴于centos7自带的3的内核存在一些bug导致docker运行的不稳定，可升级内核为4.4.X 以上即可<br>    rpm -Uvh <a href="http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm" target="_blank" rel="noopener">http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm</a><br>    yum –enablerepo=elrepo-kernel install -y kernel-lt<br>    设置开机从新内核启动<br>    grub2-set-default 0<br>1.2、设置yum源<br>    yum-config-manager –add-repo <a href="https://download.docker.com/linux/centos/docker-ce.repo" target="_blank" rel="noopener">https://download.docker.com/linux/centos/docker-ce.repo</a><br>    安装docker<br>    yum install docker-ce<br>1.3、优化docker<br>1.3.1、优化docker存储位置<br>    在/etc/docker/deamon.json中添加<br>    “data-root”: “/mnt/docker-lib”<br>1.3.2、优化国内镜像源<br>    在/etc/docker/deamon.json中添加<br>    “registry-mirrors”: [“<a href="https://registry.docker-cn.com&quot;]">https://registry.docker-cn.com&quot;]</a></p>
+<p>四、简单谈论一下docker<br>1、容器的本质是什么呢？<br>容器可以简单的看作是CGroup、Namespace、Rootfs的集合。<br>1.1、Namespace是linux提供的一种内核级别的隔离方法。到目前为止，一共提供了Mount Namespace，UTS Namespace，IPC Namespace，PID Namespace，Network Namespace，User Namespace，其中centos7需要升级到3.8以上的内核才可以使用所有的namespace，不过出于稳定性考虑，建议升级到4.4.X以上的内核。</p>
+<p>1.2.1、Cgroup是linux内核提供的一种资源控制的机制。细化的看，Cgroup提供了以下几个功能<br>    a、资源限制，Cgroup会对不同进程使用的资源进行限制，设定使用上限，一旦超过这个限制便会发出警告，比如OOM。<br>    b、优先级管理，Cgroup会对不同的进程分配CPU，IO资源。<br>    c、资源统计，Cgroup可以统计系统的资源使用情况。<br>    e、进程控制，对进程组进行挂起、恢复等操作。<br>    f、进程组隔离，比如：使用ns子系统可以使不同的进程组使用不同的namespace，以达到隔离的目的，不同的进程组有各自的进程、网络、文件系统挂载空间。<br>    所以从本质上来看，cgroup是内核附加在程序山的一系列钩子(hook)，通过事件触发钩子以达到对资源的限制和追踪。<br>1.3、Rootfs是容器启动时内部的文件系统，也就是docker容器的根目录。在启动docker容器时，会先为容器挂载Rootfs，并设定为只读模式，同时采用union mount技术，在Rootfs上挂载一个读写的空文件系统。<br>2、接下来谈谈docker的网络架构<br>众所周知，docker网络有四种模型，bridge，host，container，none<br>2.1、bridge<br>网络模型如下图<br><img src="/2020/06/25/docker%E5%9B%9E%E9%A1%BE%EF%BC%88%E4%B8%80%EF%BC%89/bridge.png" alt><br>docker会为容器创建独有的network namespace，也会为这个命名空间配置好虚拟网卡，路由，DNS，IP地址与iptables规则（也就是sandbox的内容）。<br>2.2、host模式<br><img src="/2020/06/25/docker%E5%9B%9E%E9%A1%BE%EF%BC%88%E4%B8%80%EF%BC%89/host.png" alt><br>在这个模式下，容器和宿主机共享一个network namespace，而不会单独获得单独的network namespace。这意味着，容器不会单独配置网卡，IP地址，而是用宿主机的，但是在这一模式下，容器内的很多操作很直接影响到宿主机，比如重启，所以这一模式并不是很推荐。<br>2.3、container模式，在这一模式下，docker将新建容器放到一个已知的容器网络栈中，这样会和已存在的容器共享IP和端口等网络资源，两者可通过lo回环接口进行通信。<br>2.4、none，不配置网络，这个需要用户自行配置网络。<br>3、那么docker的安全性呢<br>3.1、可以说，docker出现安全问题的主要原因在于容器和宿主机共享内核，因为namespace只提供了PID、Mount、Network、UTS、IPC、User这几个属性的隔离，其他资源会存在暴露的风险，假如出现宿主机资源滥用，有概率导致宿主机崩溃。其次，docker源，docker自身，DDos攻击，局域网攻击等也存在安全问题。那么应该如何应对呢？<br>3.2、docker安全措施<br>1&gt;及时更新内核，现在一般更新到4.4.X的就可以了，如果有新问题出现，再根据需求更新即可。<br>2&gt;检查Cgroup，对资源进行配额和限定，不过最新版的docker已经支持了通过docker命令行进行资源限制，可通过命令行配置即可，当然，直接修改cgroup进行限制也是可以的。<br>3&gt;严禁将宿主机上的敏感目录映射到容器，比如/etc目录<br>4&gt;仅运行必要的服务，禁止SSH服务<br>5&gt;对docker的守护进程，文件，目录进行审计，并限制root权限的docker文件访问权限为644甚至更低<br>6&gt;清理不必要的容器<br>7&gt;严禁使用host网络模式，严禁映射到特权端口<br>8&gt;创建本地镜像仓库，确保镜像，软件来源均可信，并采用安全扫描<br>9&gt;限制重启次数，避免频繁重启导致雪崩<br>10&gt;使用普通用户启动docker</p>
+<p>可以说docker是包罗万象的，本文只是先简单进行一下讨论，从下一篇文章开始，将论述我和docker更多的故事</p>
 
     
 
@@ -372,7 +272,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://yoursite.com/2019/08/06/SonatypeNexus你需要知道的那些事儿/" title="SonatypeNexus你需要知道的那些事儿" target="_blank">http://yoursite.com/2019/08/06/SonatypeNexus你需要知道的那些事儿/</a>
+          <a href="http://yoursite.com/2020/06/25/docker回顾（一）/" title="docker回顾（一）" target="_blank">http://yoursite.com/2020/06/25/docker回顾（一）/</a>
         </li>
         
         <li>
@@ -394,24 +294,13 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nexus</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
         		</li>
       		
 		</ul>
 	</div>
 
     
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/devops工具//" class="article-tag-list-link color4">devops工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
     
 
@@ -424,15 +313,20 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/08/11/dockerfile%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/07/21/120%E5%A4%A9%E7%9A%84%E5%A5%87%E8%BF%B9-%E5%87%A4%E5%87%B0%E9%A1%B9%E7%9B%AE/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          dockerfile那点事儿
+          120天的奇迹--凤凰项目
         
       </div>
     </a>
   
+  
+    <a href="/2020/05/23/%E6%88%8F%E8%AF%B4jenkins/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">戏说jenkins</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
